@@ -4,9 +4,10 @@
 |---|---|---|---|---|---|
 | 2026-09-20 | `logidev:fase-1-setup` (001-sitio-marketing-mvp) | T2 | `logicraft-trace:code-reviewer`: pass (vuelta 2) · build: pass · lint: pass · `npm audit`: 0 vulns · tests: n/a (Setup no define tareas de test; runners verificados cargando config) | 2 | — (T2 no requiere sign-off humano nombrado) |
 | 2026-09-20 | `logidev:fase-2-foundational` (001-sitio-marketing-mvp) | T2 | `logicraft-trace:code-reviewer`: pass (vuelta 2) · `logicraft-trace:security-reviewer`: pass (vuelta 2, invocado por ampliación de gate aunque T2 no lo exige) · tests: pass 25/25 · verificación funcional de /api/leads: pass · build/lint/audit: pass | 2 | — (T2 no requiere sign-off humano nombrado) |
+| 2026-09-20 | `logidev:fase-3-user-story-1` (001-sitio-marketing-mvp) | T2 | `logicraft-trace:code-reviewer`: pass (vuelta 2) · tests: pass (unit 28/28, smoke 3/3, e2e 6/6) · build: pass (`/contacto` como `ƒ Dynamic`) · lint/audit: pass | 2 | — (T2 no requiere sign-off humano nombrado) |
 | 2026-09-19 | `logiplan:congruencia` (001-sitio-marketing-mvp) | T2 | `logicraft-trace:architect (spec+plan+tasks, congruencia cruzada)`: pass | 1 (revisión final; ver notas de la entrada para el detalle de las 5+4 vueltas de plan/tasks) | — (T2 no requiere sign-off humano nombrado) |
 
-Detalle completo en `.trace/ledger.jsonl`. Integridad verificada con `node scripts/ledger.js verify` → cadena íntegra, **4 entradas** (una de ellas es una anotación sobre la de fase 1, no un gate nuevo).
+Detalle completo en `.trace/ledger.jsonl`. Integridad verificada con `node scripts/ledger.js verify` → cadena íntegra, **5 entradas** (una de ellas es una anotación sobre la de fase 1, no un gate nuevo).
 
 ## Resueltos
 

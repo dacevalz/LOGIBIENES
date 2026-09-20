@@ -23,3 +23,15 @@
 - **Disparador:** `logicraft-trace:security-reviewer` encontró que toda la defensa anti-replay del formulario depende de un `export const dynamic = "force-dynamic"` en dos páginas que **todavía no existían** (T027/T043). El gate de la fase no podía verificarlo porque el archivo no estaba.
 - **Lección:** una fase Foundational puede dejar cerrada una superficie de seguridad cuya precondición vive en una fase posterior. El gate de la fase que la construye no la ve, y el gate de la fase que la rompería no sabe que debe buscarla.
 - **Guardrail:** cuando un mecanismo de seguridad dependa de una precondición que otra fase debe cumplir, registrarla como nodo `Assumption` en `.trace/graph/` con `blocks: []` pero con condición explícita de cierre en la fase destino, y —mejor— dejarla como prueba automatizada que falle si la precondición no está, igual que `no-placeholder-contact.test.ts` mecaniza AS-01. Un recordatorio en prosa no es un guardrail.
+
+## 2026-09-20 — 001-sitio-marketing-mvp / Phase 3 (User Story 1)
+
+- **Disparador:** el test de envío nativo sin JS dependía de enviar en menos de 1,5 s para tomar la rama de descarte silencioso. Falló porque teclear cuatro campos sin JavaScript tarda más que eso. El síntoma no fue "el código está mal", fue "el test gana o pierde según lo rápido que sea la máquina".
+- **Lección:** un test que depende de un umbral de tiempo del propio sistema bajo prueba no verifica el comportamiento, verifica el reloj. Y cuando pasa, pasa por la razón equivocada sin que nadie se entere.
+- **Guardrail:** si una rama del código se elige por tiempo transcurrido, el test no debe intentar ganarle al reloj: hay que disparar esa rama por una entrada determinista (aquí, llenar el honeypot) o inyectar el instante como parámetro (como ya hace `procesarLead(entrada, ahora)`). Ante un test con `waitForTimeout` antes de una aserción de rama, preguntarse siempre qué pasa si la máquina va el doble de lenta.
+
+## 2026-09-20 — 001-sitio-marketing-mvp / Phase 3 (User Story 1)
+
+- **Disparador:** escribí un test e2e que interceptaba `/api/leads` con `page.route` y devolvía un 303 para comprobar que el formulario aterrizaba en `/gracias`. El revisor señaló que nunca ejecutaba `route.ts` ni `procesarLead`: solo comprobaba que un navegador sigue un `Location`, algo que habría pasado igual contra un servidor con la lógica completamente rota.
+- **Lección:** un mock puesto en la capa de red del navegador no prueba la aplicación, prueba el navegador. Un test verde así infla la cuenta de cobertura y da una falsa sensación de que la ruta está cubierta.
+- **Guardrail:** antes de dar por bueno un test con `page.route`/mock de red, preguntar qué línea de código propio ejecuta. Si la respuesta es "ninguna", borrarlo en vez de re-etiquetarlo — y si hace falta cubrir esa ruta, buscar una entrada determinista que recorra el código real.

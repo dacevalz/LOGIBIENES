@@ -1,0 +1,36 @@
+{
+  "timestamp": "2026-09-20T01:20:00-05:00",
+  "tier": "T2",
+  "stage": "logidev:fase-3-user-story-1",
+  "gates": {
+    "logicraft-trace:code-reviewer": "pass (vuelta 2; vuelta 1 = APPROVE con 1 MEDIUM + 3 LOW)",
+    "tests": "pass — unit 28/28, smoke 3/3, e2e 6/6",
+    "build": "pass (/contacto listada como f Dynamic: evidencia dura de force-dynamic)",
+    "lint": "pass (0 problemas)",
+    "npm audit": "pass (0 vulnerabilidades)"
+  },
+  "iterations": 2,
+  "signed_off_by": null,
+  "notes": "T2 no exige sign-off humano nombrado. NO se invocó security-reviewer en esta fase y el code-reviewer validó explícitamente esa decisión de alcance: la superficie de leads (lib/leads.ts, api/leads/route.ts, lead-form.tsx) se auditó completa en la fase 2 y esta fase no la modifica, solo agrega las páginas que la consumen; ninguna cae en los patrones de enrutamiento sensible. AS-03 VERIFICADA EMPÍRICAMENTE para /contacto, no solo leída: el revisor comentó el export force-dynamic, confirmó que tests/unit/paginas-formulario.test.ts se pone en rojo, y restauró el archivo byte a byte (diff idéntico). AS-03 sigue pendiente para app/propiedades/page.tsx (T043). Corrección de la vuelta 2: se ELIMINÓ un test e2e que interceptaba /api/leads con page.route — nunca ejecutaba código de producción, solo comprobaba que un navegador sigue un 303. Dos fallos reales corregidos durante la implementación: getByRole(alert) chocaba con el route-announcer de Next, y el test de envío nativo dependía del umbral de 1.5s (ganaba o perdía según lo que tardara Playwright en teclear) — ahora dispara el descarte por honeypot, que es determinista. LIMITACIÓN DECLARADA: con la API key de Resend en placeholder no se puede ejercitar la rama de correo entregado sin meter un bypass en código de producción; se decidió no meterlo y diferirlo a T059. Q-02 abierta y diferida a T043. LOW retirado por el propio revisor: el uso de comprar en el H1 está respaldado por llms.txt sellado.",
+  "files": {
+    "components/sections/hero.tsx": "de4471dcad8425c40cd5dbfc3dddf11d4a56356487987f47bb3d5f286be3697a",
+    "components/sections/service-grid.tsx": "6abe83500dceb5eef50849824856d92004f032b5d6052053e5b473451b7050ef",
+    "components/sections/reveal.tsx": "11253516035300efee2b42a39627ac70fc2f890a397c425dc1684f477ff9063e",
+    "app/page.tsx": "6a67f53d31db8387d7296842201620b120625d8e73ed956f57baed9c5e20b398",
+    "app/contacto/page.tsx": "d13a3813eabe83de465b941945346e2c537a1258c9212e7067cee3a237560647",
+    "app/contacto/gracias/page.tsx": "da92f0bd60f3b9774f67a2955261bdbd51e55cb2ac407014bd24208d7c5beeec",
+    "app/contacto/error/page.tsx": "bdb95cd246d538bfc9138fc20e3ad13dd5b0460c9aaa515cb74b04245a2ec98e",
+    "tests/e2e/us1-home-contact.spec.ts": "12b3fa890fff8c279edf771ae9c956309ffff36428b379f01f417215661e7360",
+    "tests/e2e/us1-contact-no-js.spec.ts": "966fce0f5eb65cda5728c47dd8226ef3ef184cde1786a3c5720a78ccdc2e2382",
+    "tests/smoke/home-contacto.spec.ts": "aa51672c43df96794685df6a48b9214bb7791244cebed77bf14005c3e898da77",
+    "tests/smoke/_contenido-sin-js.ts": "028af9a4c8226cb72a5459a0e859ede2b72d0cbbfc59499f82df2801ed040f99",
+    "tests/unit/paginas-formulario.test.ts": "b8e689a2fbee8d8791e5955f4fea9236987c28ecd244af1cd323241fae9e3230"
+  },
+  "decision_ids": [],
+  "assumption_ids": [
+    "AS-01",
+    "AS-02",
+    "AS-03"
+  ],
+  "prev_hash": "f25ef3432d19602f0061de3945d2d8024be0039f8fd9862499203f8d78ebcb89"
+}

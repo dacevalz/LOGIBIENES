@@ -25,8 +25,10 @@
   - ✅ **D-08** (Decision, `aceptada`): se agregan `NEXT_PUBLIC_SITE_URL` y `LEADS_FROM_EMAIL`, que ningún task previó. `SITE_URL` resuelve en cascada y **no** trae dominio por defecto: un dominio inventado en JSON-LD es tan grave como un teléfono placeholder.
   - ✅ **DIS-02** (Discovery): el domicilio "Medellín" no sale de los estatutos (Artículo 4 sin diligenciar) sino de `spec.md` §Assumptions. Documentado en el código.
   - ⚪ **Q-01** (Question, `simple`, abierta): orden `refine`/`transform` en `medioContacto` — un byte NUL hace que el valor validado y el enviado difieran. Refutado como vector por `security-reviewer`; no se corrigió para no invalidar dos gates ya en verde.
-- ⚪ **W-03** Phase 3: User Story 1 — Entender la oferta y contactar (P1, MVP) ← siguiente
-- ⚪ **W-04** Phase 4: User Story 2 — Encontrar el servicio que necesita (P2)
+- ✅ **W-03** Phase 3: User Story 1 — cerrada 2026-09-20, gate `pass` en vuelta 2 (ver `.trace/gates/logidev-fase-3-user-story-1.json`). **MVP desplegable** salvo por AS-01/AS-02.
+  - `AS-03` verificada empíricamente para `/contacto` con una prueba de mutación del revisor; sigue pendiente para `/propiedades` (T043).
+  - ⚪ **Q-02** (Question, `simple`, abierta, diferida a T043): la guarda de `paginas-formulario.test.ts` tolera que una página no exista; si `/contacto` se renombrara después de que `/propiedades` exista, esa iteración pasaría en silencio.
+- ⚪ **W-04** Phase 4: User Story 2 — Encontrar el servicio que necesita (P2) ← siguiente
 - ⚪ **W-05** Phase 5: User Story 3 — Resolver dudas sin tener que contactar (P3)
 - ⚪ **W-06** Phase 6: User Story 4 — Dejar sus criterios de búsqueda sin inventario aún cargado (P4)
 - ⚪ **W-07** Phase 7: Polish & Cross-Cutting Concerns
