@@ -1,0 +1,50 @@
+{
+  "timestamp": "2026-09-20T01:05:00-05:00",
+  "tier": "T2",
+  "stage": "logidev:fase-2-foundational",
+  "gates": {
+    "logicraft-trace:code-reviewer": "pass (vuelta 2; vuelta 1 = APPROVE con 1 MEDIUM, cerrado)",
+    "logicraft-trace:security-reviewer": "pass (vuelta 2; vuelta 1 = 0 CRITICAL, 0 HIGH, 2 MEDIUM, 4 LOW — los 2 MEDIUM y 2 de los 4 LOW cerrados, 2 LOW documentados como riesgo residual aceptado)",
+    "tests": "pass (npm run test:unit, 25/25)",
+    "verificacion funcional contra servidor": "pass (7 caminos de /api/leads: 3 JSON + 4 form-urlencoded, incluida la defensa de open redirect; sitemap con 13 URLs; robots idéntico al contrato)",
+    "build": "pass",
+    "lint": "pass (0 problemas)",
+    "npm audit": "pass (0 vulnerabilidades)"
+  },
+  "iterations": 2,
+  "signed_off_by": null,
+  "notes": "T2 no exige sign-off humano nombrado. logicraft-trace:security-reviewer NO lo exige el tier T2 pero se invocó igual porque la fase toca entrada de usuario sin autenticar, PII, criptografía (HMAC-SHA256) y un endpoint público — la tabla de enrutamiento de logidev permite ampliar el gate, nunca reducirlo, y code-review.md del usuario lo obliga en esos casos. Ningún gate se omitió a petición del usuario. Herramientas deterministas (Betterleaks/OSV-Scanner/OpenGrep) NO se corrieron: el skill las exige solo en T0/T1; en su lugar se verificó npm audit (0 vulns), que .env.local no está trackeado, y un grep de patrones de secreto en fuente (ninguno). Desviaciones: D-07 (acordeón con <details> nativo sin aria-expanded, única forma de que la FAQ funcione sin JS), D-08 (NEXT_PUBLIC_SITE_URL y LEADS_FROM_EMAIL, gap real de tasks.md confirmado por el revisor). DIS-02: el domicilio Medellín no sale de los estatutos (Artículo 4 sin diligenciar) sino de spec.md §Assumptions; se documentó en el código. Q-01 abierta (cynefin simple, no bloqueante): orden refine/transform en medioContacto, refutado como vector por el revisor de seguridad. RIESGOS RESIDUALES ACEPTADOS: canal lateral de temporización entre descarte silencioso y éxito real, y ausencia de cota de tamaño de cuerpo en código — ambos delegados al WAF de Vercel, misma categoría que el rate-limit ya descartado en plan.md. PENDIENTE CRÍTICO AS-03: toda la defensa anti-replay depende de que T027 y T043 declaren force-dynamic; ni W-03 ni W-06 se pueden cerrar sin verificarlo ejecutando.",
+  "files": {
+    "content/legal.ts": "80f12243f7e32238233ec3f230dd066ed7def17307856502b75f9e1ae5caeaae",
+    "content/servicios.ts": "d4e6c4dc84750283528735d67b4760a07e60592977afefc2dcc819cac6368140",
+    "content/faq.ts": "49529ecd9e8aec74d6481c4559d8da7e03cd7fceb5632e63ff865f247dc2ff69",
+    "lib/leads.ts": "ad78ba36aa00244ffef8ab26bbb1945e4f6dadcb807b86daf00ff00a267c5ce4",
+    "lib/seo.ts": "7a648960c8fe79f880af17226d22420963134f7fec255e61157d3b13e5d92342",
+    "components/ui/button.tsx": "0e4e151886fd648aab41709c4c4f8858a364cf866efa3ba75711e1cdfdce67b0",
+    "components/ui/input.tsx": "1eb50c7fbf56f6a08f47e9f43ca5f25cb2d9d7cd5b3a942db61e19bb90904526",
+    "components/ui/label.tsx": "f72d1d54fe21d00471916a1aeb78ae992f0bef34555974943496986c10da8364",
+    "components/ui/accordion.tsx": "08ea0f6eb635e715feb94d3bf3dd98bf4f6971a5efe410646b0af3ab0a4fce4f",
+    "components/sections/lead-form.tsx": "fe1a6d254e224d6a143bb656b4d0b68fe1a0655bcba08e5ef31ccf5bc81cefa2",
+    "components/contact-cta.tsx": "c29f537de4f69bccc1f5a55f20bebe7fe78e08b29acedea351ffd5c9e4ab3c1f",
+    "app/layout.tsx": "2330422a8578bf43cbb2d18073dcd591babb5e6f4ef01f9e7f11d90f0e377d8a",
+    "app/page.tsx": "256960e837549fbf2891549d7af8d84739659898b8c97257064bda8eb1dcd1c8",
+    "app/robots.ts": "2383f3137635fef6dffad9fb8f2fc82f86d0330ade71a45a0f0dd7197ddb533c",
+    "app/sitemap.ts": "b5bb594fd4d156297ed9396183a83317b542ad72cb1c5d69116bec80361a36ce",
+    "app/api/leads/route.ts": "76274cc75704e8ecbbe55b8d63493186ea6a929c773a336a8fdc637e0eefee94",
+    "app/aviso-de-privacidad/page.tsx": "7a56eb14aa06eb4fb683cd8b2b0b43358c0db371d260e0d9db116a938ef2af5b",
+    "public/llms.txt": "76777f1d4e7c755ee02cb43d5254c240ebe313b09bf4adc2230ca4d23dfa097d",
+    "tests/unit/leads.test.ts": "f3a8ae03a8ed9e12ca16939d787e847bfa456d4220b02b99eaa1ecf79fb25903",
+    "tests/unit/no-placeholder-contact.test.ts": "f3934cf81f46cef24e4c63af2034516f175ab172f644c12db7297d18cec22203",
+    ".env.example": "2e5d1a8ee3c62d865464fc498923d9e3fabce6027b6d30c6a868b3f32b825e80"
+  },
+  "decision_ids": [
+    "D-07",
+    "D-08"
+  ],
+  "assumption_ids": [
+    "AS-01",
+    "AS-02",
+    "AS-03"
+  ],
+  "prev_hash": "92c29d0669d1a429326009b45baf7d9f7b076e5b2bedaf55c0447d0a43793f6f"
+}

@@ -1,0 +1,18 @@
+# Logibienes
+
+> Inmobiliaria colombiana con domicilio en Medellín. Un solo lugar para comprar, vender, arrendar o invertir en bienes raíces — fácil, rápido, digital.
+
+## Quiénes somos
+- Nosotros: /nosotros
+
+## Servicios
+- Compra y venta de inmuebles: /servicios/compra-venta
+- Arrendamientos e intermediación: /servicios/arrendamientos
+- Administración de inmuebles: /servicios/administracion-inmuebles
+- Proyectos y construcción: /servicios/proyectos-y-construccion
+- Asesoría y avalúos: /servicios/asesoria-y-avaluos
+
+## Páginas clave
+- Preguntas frecuentes: /preguntas-frecuentes
+- Contacto: /contacto
+- Buscar/registrar interés en una propiedad: /propiedades
