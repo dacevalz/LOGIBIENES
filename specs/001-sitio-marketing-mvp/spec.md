@@ -37,7 +37,7 @@ Una persona con una necesidad específica (vender un lote, poner en arriendo un 
 **Acceptance Scenarios**:
 
 1. **Given** un visitante busca "administrar mi apartamento en arriendo", **When** llega a la página del servicio de administración de inmuebles, **Then** encuentra una descripción específica de ese servicio (no una lista genérica) y un llamado a la acción para contactar sobre ese servicio en particular.
-2. **Given** un visitante entra al hub `/servicios`, **When** revisa las opciones, **Then** ve las 4 líneas de servicio (compra-venta, arrendamientos, administración de inmuebles, proyectos y construcción) cada una enlazando a su propia página.
+2. **Given** un visitante entra al hub `/servicios`, **When** revisa las opciones, **Then** ve las 5 líneas de servicio (compra-venta, arrendamientos, administración de inmuebles, proyectos y construcción, asesoría y avalúos) cada una enlazando a su propia página.
 
 ---
 
@@ -73,10 +73,11 @@ Una persona busca una propiedad para comprar o arrendar, entra a `/propiedades` 
 
 ### Edge Cases
 
-- ¿Qué pasa si el visitante tiene JavaScript deshabilitado o su conexión falla al cargar scripts? El contenido de texto, la navegación y los formularios deben seguir siendo legibles y usables (ver FR-008).
+- ¿Qué pasa si el visitante tiene JavaScript deshabilitado o su conexión falla al cargar scripts? El contenido de texto y la navegación deben seguir siendo legibles (FR-008), y los formularios deben seguir siendo enviables y confirmables (FR-016).
 - ¿Qué pasa si un crawler de un buscador o de un motor de respuestas de IA (no un navegador humano) solicita cualquier página pública? Debe recibir el mismo contenido completo que vería una persona, sin bloqueo (ver FR-010, FR-011).
 - ¿Qué pasa si un agente automatizado (actuando en nombre de un usuario real) intenta completar el formulario de contacto? Debe poder identificar cada campo por su etiqueta y completarlo sin depender de posición visual o de resolver un CAPTCHA visual (ver FR-004, FR-009).
-- ¿Qué pasa si alguien llega a `/propiedades` o al formulario de contacto antes de que existan datos de contacto reales publicados? El sitio no debe mostrar un placeholder como si fuera un dato real (ver Assumptions, AS-01 en el grafo de razonamiento del proyecto).
+- ¿Qué pasa si alguien llega a `/propiedades` o al formulario de contacto antes de que existan datos de contacto reales publicados? El sitio no debe mostrar un placeholder como si fuera un dato real (ver Assumptions, AS-01 en el grafo de razonamiento del proyecto). Mientras el número de WhatsApp real no exista, el CTA principal MUST apuntar a un canal que sí funcione (el formulario de `/contacto`), nunca a un enlace `wa.me` roto.
+- ¿Qué pasa si el envío del formulario falla en el lado del servidor (ej. el servicio de envío de correo no responde)? El visitante MUST recibir un mensaje claro de que no se pudo confirmar el envío y una alternativa de contacto inmediata (ej. WhatsApp/canal directo), nunca una confirmación falsa de éxito.
 - ¿Qué pasa si un usuario de lector de pantalla navega el FAQ? Debe poder acceder a la respuesta completa igual que un usuario vidente (ver FR-008, SC-004).
 
 ## Requirements *(mandatory)*
@@ -85,7 +86,7 @@ Una persona busca una propiedad para comprar o arrendar, entra a `/propiedades` 
 
 - **FR-001**: El home MUST comunicar, sin necesidad de scroll, qué hace Logibienes y su propuesta de valor ("fácil, rápido, digital" para comprar/vender/arrendar/invertir).
 - **FR-002**: El sitio MUST ofrecer una página propia por cada línea de servicio (compra-venta, arrendamientos, administración de inmuebles, proyectos y construcción/urbanización, asesoría y avalúos), enlazadas desde un hub `/servicios`.
-- **FR-003**: Todas las páginas MUST exponer un canal de contacto de baja fricción (WhatsApp) visible sin scroll adicional.
+- **FR-003**: Todas las páginas MUST exponer un canal de contacto operativo de baja fricción, visible sin scroll adicional: WhatsApp cuando el número real esté configurado, o el formulario de `/contacto` como equivalente funcional mientras no lo esté (ver Assumptions, AS-01) — nunca un enlace roto. Esto MUST implementarse como un único componente de contacto compartido entre todas las páginas, no una decisión repetida por página.
 - **FR-004**: El formulario de `/contacto` MUST capturar nombre, un medio de contacto (email o teléfono) y un mensaje, y MUST confirmar al usuario que el envío fue recibido.
 - **FR-005**: `/preguntas-frecuentes` MUST responder las dudas más comunes de comprar/vender/arrendar/invertir en Colombia, en formato pregunta-directa/respuesta-directa.
 - **FR-006**: `/propiedades` MUST permitir a un visitante registrar sus criterios de búsqueda (tipo de inmueble, zona, presupuesto) aun cuando no exista inventario real de propiedades.
@@ -94,15 +95,17 @@ Una persona busca una propiedad para comprar o arrendar, entra a `/propiedades` 
 - **FR-009**: Todo control interactivo (en particular los campos del formulario de contacto y de búsqueda) MUST tener una etiqueta/nombre determinable de forma programática, de modo que pueda ser operado por tecnología de asistencia o por un agente automatizado sin depender de su posición visual.
 - **FR-010**: El sitio MUST publicar un resumen en texto plano, legible por máquina, de quién es Logibienes y qué ofrece, en una ubicación estándar y descubrible.
 - **FR-011**: El sitio MUST permitir explícitamente el acceso de los crawlers de IA conocidos a sus páginas públicas (no bloquearlos por defecto).
-- **FR-012**: Ninguna cifra, calificación o testimonio publicado en el sitio MUST ser real y verificable — no se publican datos ilustrativos como si fueran reales.
+- **FR-012**: Toda cifra, calificación o testimonio publicado en el sitio MUST ser real y verificable — no se publican datos ilustrativos como si fueran reales.
 - **FR-013**: La identidad visual (paleta de color, tipografía, logo) MUST aplicarse de forma consistente en todas las páginas según el branding aprobado (`.trace/ingestion/logibienes-branding/branding.md`).
-- **FR-014**: El formulario de contacto y el de búsqueda de propiedades MUST protegerse contra spam sin impedir el envío legítimo de un usuario real ni de un agente que actúe en su nombre (ej. mediante honeypot/límite de tasa, no mediante un CAPTCHA visual obligatorio).
+- **FR-014**: El formulario de contacto y el de búsqueda de propiedades MUST protegerse contra spam sin impedir el envío legítimo de un usuario real ni de un agente que actúe en su nombre (ej. mediante honeypot/límite de tasa, no mediante un CAPTCHA visual obligatorio). Cualquier mecanismo anti-spam MUST estar diseñado para que un agente que complete el formulario a partir de sus etiquetas accesibles (no de su disposición visual) nunca sea confundido con spam.
+- **FR-015**: El formulario de contacto y el de búsqueda de propiedades MUST capturar consentimiento explícito para el tratamiento de datos personales (Habeas Data, Ley 1581 de 2012) antes de enviar, y el sistema MUST conservar evidencia de esa autorización (qué se aceptó, versión del aviso, fecha) junto con el lead.
+- **FR-016**: El formulario de contacto y el de búsqueda de propiedades MUST poder enviarse y confirmarse exitosamente aunque el navegador no ejecute JavaScript (envío nativo del formulario, con una confirmación equivalente a la del camino con JavaScript) — no basta con que el contenido sea legible sin JS (FR-008); el envío en sí también MUST funcionar.
 
 ### Key Entities
 
-- **Contacto/Lead**: nombre, medio de contacto (email/teléfono/WhatsApp), mensaje, página de origen, fecha.
+- **Contacto/Lead**: nombre, medio de contacto (email/teléfono/WhatsApp), mensaje, página de origen, fecha, consentimiento de tratamiento de datos (versión del aviso aceptada).
 - **Criterio de búsqueda**: tipo de inmueble, zona/ciudad, rango de presupuesto, si es para comprar o arrendar, datos de contacto del interesado.
-- **Servicio**: nombre, descripción, página propia, llamado a la acción asociado.
+- **Servicio**: nombre, descripción, página propia, llamado a la acción asociado. Son 5 líneas de servicio: compra-venta, arrendamientos, administración de inmuebles, proyectos y construcción, asesoría y avalúos (Artículo 5 de los estatutos).
 - **Pregunta frecuente**: pregunta, respuesta, categoría (compra, venta, arriendo, inversión, general).
 
 ## Success Criteria *(mandatory)*
@@ -116,6 +119,7 @@ Una persona busca una propiedad para comprar o arrendar, entra a `/propiedades` 
 - **SC-005**: Cada página principal pasa una verificación automatizada de accesibilidad sin violaciones críticas de WCAG 2.2 AA.
 - **SC-006**: Un motor de búsqueda o un motor de respuestas de IA puede encontrar y resumir correctamente qué hace Logibienes y en qué ciudad opera, verificable contra una lista documentada de páginas indexables y un archivo-resumen descubrible.
 - **SC-007**: Un visitante sin ninguna propiedad real disponible para ver puede registrar su interés de búsqueda en menos de un minuto.
+- **SC-008**: Un envío del formulario de contacto realizado con JavaScript deshabilitado en el navegador se confirma correctamente (el visitante ve una confirmación equivalente a la del camino con JavaScript), sin error.
 
 ## Assumptions
 

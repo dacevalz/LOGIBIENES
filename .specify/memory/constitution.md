@@ -1,50 +1,30 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Logibienes Web Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Contenido primero, JS después (Accesible por defecto)
+Todo contenido público (texto, servicios, FAQ, datos de contacto) MUST existir en el HTML servido, sin depender de la ejecución de JavaScript ni de una interacción del usuario para revelarse. Esto es lo que hace el sitio operable tanto por personas con tecnología de asistencia como por agentes de IA (crawlers y agentes de navegación) — no son dos requisitos distintos, es el mismo.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Simplicidad (YAGNI)
+No se construye backend, base de datos, CMS externo ni autenticación mientras una solución más simple (formulario a WhatsApp/email, contenido en Markdown en el repo) resuelva el mismo requisito. Complejidad nueva se justifica contra un requisito real de `spec.md`, nunca contra una necesidad especulativa.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Cero datos inventados
+Ninguna cifra, calificación, testimonio o dato de contacto se presenta como real si no lo es. Un placeholder pendiente de reemplazo se marca explícitamente como tal en el código/contenido y bloquea el paso a producción hasta resolverse (ver supuestos en `.trace/graph/`).
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. SEO/AEO no es una fase aparte
+Metadata única por página, datos estructurados (JSON-LD), sitemap/robots/llms.txt y contenido citable en formato pregunta-respuesta se construyen junto con cada página, no se agregan al final como capa de optimización.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Identidad de marca consistente
+Paleta de color, tipografía (Anton + Inter) y logo aprobados en `.trace/ingestion/logibienes-branding/branding.md` se aplican sin desviación en todas las páginas nuevas.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Restricciones del proyecto
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+- Tier TRACE: **T2** (negocio estándar, sin PCI/PII sensible) — ver `.trace/tier.json`.
+- Sin base de datos propia en el MVP; sin autenticación de usuarios.
+- Todo motion respeta `prefers-reduced-motion`.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+Esta constitución aplica a todas las fases de `specs/*/plan.md` de este repo. Un plan que se aparte de un principio debe justificarlo explícitamente en su sección "Complexity Tracking" — si no hay justificación registrada, el arquitecto lo trata como gap en la revisión de `logiplan`.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-09-19 | **Last Amended**: 2026-09-19

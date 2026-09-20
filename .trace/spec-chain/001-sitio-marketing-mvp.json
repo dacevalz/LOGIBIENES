@@ -2,7 +2,13 @@
   "feature": "001-sitio-marketing-mvp",
   "spec": {
     "file": "specs/001-sitio-marketing-mvp/spec.md",
-    "fingerprint": "sha256:c15f8a907b1fd1bc091507f7f3c87d49cd1a3bac0cc8505f8426dfc2a5f24411",
-    "sealed_at": "2026-09-20T03:19:33.206Z"
+    "fingerprint": "sha256:478de6050419ec5674a748d70018b7e03d9d15fa3a723d76b8fad892530e1374",
+    "sealed_at": "2026-09-20T03:52:43.487Z"
+  },
+  "plan": {
+    "file": "specs/001-sitio-marketing-mvp/plan.md",
+    "fingerprint": "sha256:44c9b7d4ac092aa4e7449daa47e18609f38cc6e2edc05f61774c2c090189208e",
+    "sealed_at": "2026-09-20T03:59:16.245Z",
+    "source_spec_fingerprint": "sha256:478de6050419ec5674a748d70018b7e03d9d15fa3a723d76b8fad892530e1374"
   }
 }
