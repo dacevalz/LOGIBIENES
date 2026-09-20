@@ -272,7 +272,12 @@ async function enviarCorreo(lead: LeadRegistrado): Promise<boolean> {
   try {
     const { Resend } = await import("resend");
     const { error } = await new Resend(apiKey).emails.send({
-      from: process.env.LEADS_FROM_EMAIL ?? "onboarding@resend.dev",
+      // `||`, no `??`: dotenv parsea `LEADS_FROM_EMAIL=` (la línea que trae
+      // .env.example) como cadena VACÍA, no como undefined, así que con `??`
+      // el respaldo documentado nunca se aplicaba — se enviaba `from: ""`,
+      // Resend lo rechazaba y el visitante aterrizaba en /error sin que nada
+      // dijera que el problema era una variable vacía.
+      from: process.env.LEADS_FROM_EMAIL?.trim() || "onboarding@resend.dev",
       to: destino,
       subject: `Nuevo lead (${lead.tipo}) — ${lead.nombre}`,
       text: cuerpoCorreo(lead),

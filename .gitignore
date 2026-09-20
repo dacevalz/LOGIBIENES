@@ -33,6 +33,16 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# Credenciales que no son .env y que un `git add -A` barrería igual.
+# Este repo es público: un archivo de códigos de recuperación aquí dentro se
+# publica con el primer commit distraído. Lo correcto es guardarlos FUERA del
+# repo (gestor de contraseñas); esto es la red, no la solución.
+RECOVERY-CODES*
+*recovery-codes*
+*.key
+*.pem
+credentials*.json
+
 # vercel
 .vercel
 
