@@ -1,0 +1,33 @@
+{
+  "timestamp": "2026-09-20T01:50:00-05:00",
+  "tier": "T2",
+  "stage": "logidev:fase-5-user-story-3",
+  "gates": {
+    "logicraft-trace:code-reviewer": "pass (vuelta 3; vuelta 1 = APPROVE con 3 MEDIUM + 2 LOW, vuelta 2 = APPROVE con 2 LOW)",
+    "tests": "pass — unit 33/33, smoke 12/12, e2e 10/10",
+    "build": "pass",
+    "lint": "pass (0 problemas)",
+    "npm audit": "pass (0 vulnerabilidades)"
+  },
+  "iterations": 3,
+  "signed_off_by": null,
+  "notes": "T2 no exige sign-off humano nombrado. No se invocó security-reviewer y el code-reviewer validó la decisión de alcance. Tres vueltas, la única fase hasta ahora que pasa de dos. La tercera no la forzó un hallazgo del revisor sino una decisión propia: los dos LOW restantes eran opcionales según él, pero uno era un test de desambiguación que no ejecutaba ninguna aserción con el contenido real mientras su comentario afirmaba verificar el mecanismo — el mismo patrón sobre el que este proyecto ya tiene dos lecciones escritas. Se corrigió con entradas sintéticas que fuerzan la colisión. DESVIACIONES: D-10 — T040 describe el colapso del acordeón como CSS de altura/overflow, pero <details> colapsa por la regla del user-agent display:none; el invariante FR-008 se cumple igual y lo verifica el smoke. Es una desviación de mecanismo distinta de la que cubre D-07, que solo trata el aria-expanded. D-11 — el título del <summary> se envuelve en un <h3> (permitido por el spec de HTML) para que la navegación por encabezados alcance cada pregunta, y la generación de ids se movió a content/faq-ids.ts con desambiguación ante colisión del slug truncado. El revisor verificó que el <h3> dentro de <summary> no rompe el mapeo nativo que defendía D-07, y que Preflight de Tailwind normaliza el heading sin regresión visual. Q-03 abierta y diferida a Phase 7: el bloque de CTA está repetido en tres páginas; no se extrajo aquí porque dos copias viven en archivos de la fase 4 con gate en verde. LOW corregido sin abrir vuelta 4 por ser solo un título de test engañoso, sin cambio de lógica.",
+  "files": {
+    "components/sections/faq-accordion.tsx": "8faa996b726d3af2aa92602deeedd95700408d218d6548b743cd099bd33c6a45",
+    "components/ui/accordion.tsx": "105753f5b00c385d9e02838434e884ed149d005a4a00d6c3cc864abd50f5bcf6",
+    "app/preguntas-frecuentes/page.tsx": "c752fa42ebfe822d3163af5d3d2c1bfe31ba5faae5801edd8d1d99095f7622d4",
+    "content/faq-ids.ts": "2c13fa696aa06060c54ba7aa447723953a5767f0e8405d4554c0611f41319c59",
+    "tests/smoke/faq.spec.ts": "1d27b0cb0f30ff910195656541a90a3873c3b62817b43828f1d0f7e4fe407b83",
+    "tests/unit/faq-ids.test.ts": "c3419d99b26cc658553a7421fdd0e91aeb1368a91778badbf665c173c6317821"
+  },
+  "decision_ids": [
+    "D-07",
+    "D-10",
+    "D-11"
+  ],
+  "assumption_ids": [
+    "AS-01",
+    "AS-02"
+  ],
+  "prev_hash": "f98d925065b48ae09db4ba9463fa152f92eda93c0a36c100f9a97844f6db9635"
+}

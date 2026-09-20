@@ -47,3 +47,15 @@
 - **Disparador:** el script de cierre de fase falló con `SyntaxError` porque el texto de `notes` contenía comillas simples y yo lo pasaba dentro de un `node -e '...'` en bash. La cadena `&&` cortó y no se aplicó nada — por suerte de forma atómica.
 - **Lección:** el texto de auditoría en español lleva comillas, guiones y acentos; meterlo inline en un `node -e` con comillas simples es frágil por construcción, y un fallo a mitad de camino podría dejar el ledger o el grafo a medio escribir.
 - **Guardrail:** todo cierre de fase (marcar tareas + ledger + grafo + lecciones) va en un archivo `.mjs` en el scratchpad y se ejecuta con `node archivo.mjs`, nunca inline. Y verificar después con `ledger.js verify` que la cadena quedó íntegra.
+
+## 2026-09-20 — 001-sitio-marketing-mvp / Phase 5 (User Story 3)
+
+- **Disparador:** escribí un test llamado "verifica el MECANISMO de desambiguación" que recorría los ids reales buscando sufijos numéricos. Como ninguna de las 14 preguntas colisiona hoy, el bucle no ejecutaba ni una aserción: el test pasaba en verde sin probar absolutamente nada.
+- **Lección:** un test que itera sobre datos reales buscando un caso que hoy no existe es un test vacío disfrazado. Y es peor que no tenerlo, porque su nombre convence a todo el mundo de que esa rama está cubierta.
+- **Guardrail:** para probar un mecanismo defensivo (desambiguación, saneamiento, reintento, límite), la entrada va **construida a mano para dispararlo**, nunca tomada del contenido real. Si el test necesita que el dato de producción tenga cierta forma para ejercitar algo, extraer la lógica a una función pura y llamarla con entradas sintéticas.
+
+## 2026-09-20 — 001-sitio-marketing-mvp / Phase 5 (cierre)
+
+- **Disparador:** al escribir el test unitario de los ids de la FAQ, el runner falló transformando JSX porque la lógica vivía dentro de un componente `.tsx` y el `tsconfig` usa `jsx: "preserve"`.
+- **Lección:** que un test no pueda importar algo suele ser una señal de diseño, no un problema de configuración del runner. Aquí la generación de ids era dato derivado del contenido, no UI, y estaba en el archivo equivocado.
+- **Guardrail:** antes de tocar la configuración del runner para poder importar algo, preguntar si eso que se quiere probar pertenece de verdad al archivo donde está. Si es lógica pura dentro de un componente, moverla a un módulo sin JSX y probarla ahí.

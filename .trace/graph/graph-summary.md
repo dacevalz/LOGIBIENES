@@ -30,6 +30,9 @@
   - ⚪ **Q-02** (Question, `simple`, abierta, diferida a T043): la guarda de `paginas-formulario.test.ts` tolera que una página no exista; si `/contacto` se renombrara después de que `/propiedades` exista, esa iteración pasaría en silencio.
 - ✅ **W-04** Phase 4: User Story 2 — cerrada 2026-09-20, gate `pass` en vuelta 2 (ver `.trace/gates/logidev-fase-4-user-story-2.json`)
   - ✅ **D-09** (Decision, `aceptada`): las 5 páginas de servicio son una sola ruta `app/servicios/[slug]/page.tsx` con `generateStaticParams`, no cinco `page.tsx`. El build las prerrenderiza igual como SSG; unificar evita cinco copias divergentes y cierra por construcción el hueco de que una sexta línea de servicio publique en el sitemap una URL con 404. El revisor la evaluó a fondo y recomendó mantenerla.
-- ⚪ **W-05** Phase 5: User Story 3 — Resolver dudas sin tener que contactar (P3) ← siguiente
-- ⚪ **W-06** Phase 6: User Story 4 — Dejar sus criterios de búsqueda sin inventario aún cargado (P4)
+- ✅ **W-05** Phase 5: User Story 3 — cerrada 2026-09-20, gate `pass` en vuelta 3 (ver `.trace/gates/logidev-fase-5-user-story-3.json`)
+  - ✅ **D-10** (Decision, `aceptada`): T040 describe el colapso como CSS de altura/overflow, pero `<details>` colapsa por la regla `display:none` del user-agent. El invariante FR-008 se cumple igual y lo verifica el smoke. Desviación de mecanismo, distinta de D-07.
+  - ✅ **D-11** (Decision, `aceptada`): el `<summary>` envuelve su título en un `<h3>` para que la navegación por encabezados alcance cada pregunta; los ids se movieron a `content/faq-ids.ts` con desambiguación ante colisión y quedaron cubiertos por tests.
+- ⚪ **W-06** Phase 6: User Story 4 — Dejar sus criterios de búsqueda sin inventario aún cargado (P4) ← siguiente. **No se puede cerrar sin verificar `force-dynamic` en `/propiedades` (AS-03) con evidencia ejecutada.**
 - ⚪ **W-07** Phase 7: Polish & Cross-Cutting Concerns
+  - ⚪ **Q-03** (Question, `simple`, abierta): el bloque de CTA está repetido en tres páginas; extraerlo aquí, que es donde corresponde.

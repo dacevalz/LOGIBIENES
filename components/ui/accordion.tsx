@@ -26,8 +26,16 @@ export function Accordion({ items }: { items: readonly AccordionItem[] }) {
     <div className="divide-y divide-carbon/15 border-y border-carbon/15">
       {items.map((item) => (
         <details key={item.id} id={item.id} className="group py-2">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-3 text-left text-lg font-medium text-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-electric">
-            {item.titulo}
+          {/*
+            El título va dentro de un <h3>, que el spec de HTML permite
+            explícitamente como hijo de <summary>. Sin él, quien navega por
+            encabezados con un lector de pantalla llega a la sección pero no a
+            cada ítem del acordeón. Nivel 3 fijo: el único consumidor lo usa
+            bajo un <h2> de categoría; si algún día hace falta otro nivel, se
+            parametriza entonces y no antes.
+          */}
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-3 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-electric">
+            <h3 className="text-lg font-medium text-navy">{item.titulo}</h3>
             <span
               aria-hidden="true"
               className="shrink-0 text-electric transition-transform group-open:rotate-45"

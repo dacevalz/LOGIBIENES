@@ -110,9 +110,9 @@ Next.js App Router de una sola aplicación (`app/`, `components/`, `content/`, `
 
 **Independent Test**: entrar a `/preguntas-frecuentes` e inspeccionar que el HTML crudo trae la respuesta completa de cada pregunta.
 
-- [ ] T040 [US3] Implementar `app/preguntas-frecuentes/page.tsx` (depende de T009, T014) con `components/sections/faq-accordion.tsx` (usa `aria-expanded`; el texto de cada respuesta vive siempre en `[data-content]` — colapsar es solo visual vía CSS de altura/overflow, nunca condiciona el render); metadata + `BreadcrumbList`
-- [ ] T041 [US3] JSON-LD `FAQPage` generado desde `content/faq.ts` (depende de T040)
-- [ ] T042 [P] [US3] `tests/smoke/faq.spec.ts` (Playwright, `javaScriptEnabled:false`) — el texto de cada respuesta está en `[data-content]` del HTML crudo aunque el acordeón esté colapsado visualmente
+- [x] T040 [US3] Implementar `app/preguntas-frecuentes/page.tsx` (depende de T009, T014) con `components/sections/faq-accordion.tsx` (usa `aria-expanded`; el texto de cada respuesta vive siempre en `[data-content]` — colapsar es solo visual vía CSS de altura/overflow, nunca condiciona el render); metadata + `BreadcrumbList`
+- [x] T041 [US3] JSON-LD `FAQPage` generado desde `content/faq.ts` (depende de T040)
+- [x] T042 [P] [US3] `tests/smoke/faq.spec.ts` (Playwright, `javaScriptEnabled:false`) — el texto de cada respuesta está en `[data-content]` del HTML crudo aunque el acordeón esté colapsado visualmente
 
 **Checkpoint**: US1, US2 y US3 funcionan independientemente.
 
