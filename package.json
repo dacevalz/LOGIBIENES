@@ -8,12 +8,14 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
+    "prebuild": "vitest run tests/unit/no-placeholder-contact.test.ts",
     "start": "next start",
     "lint": "eslint",
     "format": "prettier --write .",
     "test:unit": "vitest run tests/unit --exclude tests/unit/no-placeholder-contact.test.ts",
     "test:e2e": "playwright test tests/e2e",
-    "test:smoke": "playwright test tests/smoke"
+    "test:smoke": "playwright test tests/smoke",
+    "verify:rutas": "next build && node scripts/verificar-rutas-dinamicas.mjs"
   },
   "dependencies": {
     "framer-motion": "^13.4.0",

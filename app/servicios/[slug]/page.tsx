@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ContactCta } from "@/components/contact-cta";
+import { CtaBand } from "@/components/sections/cta-band";
 import { SERVICIOS, getServicio } from "@/content/servicios";
 import {
   SITE_NAME,
@@ -106,15 +106,9 @@ export default async function PaginaServicio({ params }: Props) {
           ))}
         </div>
 
-        <div className="mt-12 rounded-xl bg-navy p-8 text-white">
-          <h2 className="font-display text-2xl">{servicio.ctaTexto}</h2>
-          <p className="mt-3 text-white/85">
-            Te respondemos por el medio que prefieras.
-          </p>
-          <div className="mt-6">
-            <ContactCta />
-          </div>
-        </div>
+        <CtaBand titulo={servicio.ctaTexto}>
+          Te respondemos por el medio que prefieras.
+        </CtaBand>
       </div>
     </main>
   );

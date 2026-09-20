@@ -71,3 +71,15 @@
 - **Disparador:** al corregir la guarda hubo que decidir qué hacer con el ledger de la fase 3, que afirmaba una verificación empírica más fuerte de la ocurrida. El impulso inicial fue declararlo "irreconstruible"; el repo tiene historia de git, así que se recuperó la versión exacta de la guarda con `git show` y se demostró qué detectaba y qué no.
 - **Lección:** "no se puede reconstruir" es una afirmación que también hay que verificar. Y al corregir un registro conviene separar la afirmación de proceso (cómo se verificó) de la de riesgo (si el sistema estuvo mal), porque inflar la segunda repite el mismo pecado de imprecisión que se está corrigiendo — aquí la evidencia del build, independiente del regex, mostraba que nunca hubo riesgo real en producción.
 - **Guardrail:** antes de anotar un registro como irreconstruible, intentar reconstruirlo desde el historial de git. Y al escribir la corrección, declarar por separado qué se corrige, qué NO se corrige y por qué, con la evidencia de cada parte.
+
+## 2026-09-20 — 001-sitio-marketing-mvp / Phase 7 (Polish)
+
+- **Disparador:** `tests/unit/no-placeholder-contact.test.ts` se creó en la fase 2, se excluyó de `test:unit` a propósito (falla mientras haya placeholders, que es su razón de ser) y no se ejecutó ni una vez hasta que T057 lo enganchó al `prebuild`, cinco fases después. Estaba roto desde el día uno: renderizaba un `.tsx` que el runner no puede transformar. El gate de la fase 2 lo aprobó leyéndolo.
+- **Lección:** un test excluido de la suite es un test cuya corrección nadie comprobó. Y si además su propósito es fallar bajo ciertas condiciones, nunca se ve en verde, así que ni siquiera hay una corrida exitosa que confirme que compila.
+- **Guardrail:** todo test que se excluya de la suite principal se ejecuta al menos una vez en el commit que lo crea, con el entorno que lo hace pasar (aquí: con las variables reales inyectadas a mano). Si no se puede ejecutar ni siquiera así, no está terminado: está escrito.
+
+## 2026-09-20 — 001-sitio-marketing-mvp / Phase 7 (contenido legal)
+
+- **Disparador:** `/terminos-y-condiciones` mostraba `AVISO_PRIVACIDAD_VERSION` como su fecha de vigencia, y el smoke test que yo escribí lo afirmaba como comportamiento esperado en vez de detectarlo. Lo encontró el code-reviewer.
+- **Lección:** dos documentos legales con ciclos de cambio independientes no pueden compartir una constante de versión — falsea la fecha en ambas direcciones. Y cuando dos valores coinciden hoy, un test sobre el VALOR es ciego a cuál de los dos se usó: consagra el acoplamiento en vez de vigilarlo.
+- **Guardrail:** cuando lo que hay que proteger es la PROCEDENCIA de un dato y no su valor, el test mira el identificador en el código fuente, no el texto renderizado. Y verifica también la puerta trasera: que una constante no se defina como alias de la otra.

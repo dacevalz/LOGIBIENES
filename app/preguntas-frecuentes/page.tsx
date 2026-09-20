@@ -1,4 +1,4 @@
-import { ContactCta } from "@/components/contact-cta";
+import { CtaBand } from "@/components/sections/cta-band";
 import { FaqAccordion } from "@/components/sections/faq-accordion";
 import { FAQ } from "@/content/faq";
 import { buildBreadcrumbJsonLd, buildMetadata, jsonLdScript } from "@/lib/seo";
@@ -54,15 +54,9 @@ export default function PreguntasFrecuentes() {
           <FaqAccordion />
         </div>
 
-        <div className="mt-16 rounded-xl bg-navy p-8 text-white">
-          <h2 className="font-display text-2xl">¿Te quedó una duda?</h2>
-          <p className="mt-3 text-white/85">
-            Cuéntanosla y te respondemos por el medio que prefieras.
-          </p>
-          <div className="mt-6">
-            <ContactCta />
-          </div>
-        </div>
+        <CtaBand titulo="¿Te quedó una duda?">
+          Cuéntanosla y te respondemos por el medio que prefieras.
+        </CtaBand>
       </div>
     </main>
   );

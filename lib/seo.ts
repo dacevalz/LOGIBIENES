@@ -49,11 +49,18 @@ export function buildMetadata({
   noindex = false,
 }: BuildMetadataInput): Metadata {
   const url = `${SITE_URL}${path}`;
+
+  // El sufijo de marca lo pone el `title.template` de `app/layout.tsx`. Una
+  // versión anterior lo concatenaba TAMBIÉN aquí, y el resultado era
+  // "Contacto | Logibienes | Logibienes" en las 12 páginas que no son el
+  // home. Para el home se usa `absolute`, que salta la plantilla: su título
+  // ya nombra la marca al principio.
+  const tituloResuelto = path === "/" ? { absolute: title } : title;
   const fullTitle = path === "/" ? title : `${title} | ${SITE_NAME}`;
 
   return {
     metadataBase: new URL(SITE_URL),
-    title: fullTitle,
+    title: tituloResuelto,
     description,
     alternates: { canonical: url },
     ...(noindex ? { robots: { index: false, follow: true } } : {}),

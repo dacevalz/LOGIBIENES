@@ -10,6 +10,7 @@
 - 🔶 **AS-02** (Assumption, `pendiente`): Se usará Resend para notificar leads por email; requiere cuenta y dominio remitente verificado por DNS antes de producción. `blocks: []` — no confirmado aún por el usuario.
 - ✅ **AS-03** (Assumption, `validado`): la defensa anti-replay dependía de que `/contacto` y `/propiedades` declararan `force-dynamic`. Cerrada en la fase 6: ambas lo declaran, el build las lista como dinámicas, y `tests/unit/paginas-formulario.test.ts` detecta comentar, borrar o renombrar. **La guarda original de la fase 3 solo detectaba el borrado** — ver la anotación de la fase 3 en el ledger.
 - ✅ **D-01** (Decision, `aceptada`): Plan técnico (`plan.md`) aprobado por `logicraft-trace:architect` tras 5 vueltas de corrección. Sellado en `.trace/spec-chain/`.
+- 🔶 **AS-04** (Assumption, `pendiente`): **el MVP no se puede publicar** hasta que el usuario resuelva T053 (lector de pantalla real), T055 (Rich Results Test, necesita URL pública), T056 (WAF de Vercel), T058 (datos reales de contacto y Resend) y T059 (checklist final). La guarda del `prebuild` ya bloquea mecánicamente cualquier build de producción sin T058.
 - ✅ **D-02** (Decision, `aceptada`): `tasks.md` (59 tareas) aprobado tras 4 vueltas de corrección. Congruencia cruzada final spec+plan+tasks confirmada. **Planificación cerrada — lista para `logidev`.**
 
 **Work (fases de `tasks.md`, WIP limit = 1 — ninguna `in_progress` en este momento):**
@@ -34,6 +35,6 @@
   - ✅ **D-10** (Decision, `aceptada`): T040 describe el colapso como CSS de altura/overflow, pero `<details>` colapsa por la regla `display:none` del user-agent. El invariante FR-008 se cumple igual y lo verifica el smoke. Desviación de mecanismo, distinta de D-07.
   - ✅ **D-11** (Decision, `aceptada`): el `<summary>` envuelve su título en un `<h3>` para que la navegación por encabezados alcance cada pregunta; los ids se movieron a `content/faq-ids.ts` con desambiguación ante colisión y quedaron cubiertos por tests.
 - ✅ **W-06** Phase 6: User Story 4 — cerrada 2026-09-20, gate `pass` en la vuelta 1 (ver `.trace/gates/logidev-fase-6-user-story-4.json`). **Las 4 historias de usuario están completas.** AS-03 validada con prueba de mutación de tres vectores; Q-02 resuelta.
-- ⚪ **W-07** Phase 7: Polish & Cross-Cutting Concerns ← siguiente
-  - ⚪ **Q-03** (Question, `simple`, abierta): el bloque de CTA está repetido en tres páginas; extraerlo aquí, que es donde corresponde.
-  - ⚪ **Q-04** (Question, `simple`, abierta): la guarda de AS-03 es un proxy textual; automatizar la verificación contra la clasificación real de rutas del build en T059.
+- 🔶 **W-07** Phase 7: Polish — **parcialmente completada** el 2026-09-20, gate `pass` en vuelta 2 sobre lo implementado (ver `.trace/gates/logidev-fase-7-polish.json`). Sigue `in_progress` a propósito: quedan cinco tareas bloqueadas por el usuario (ver AS-04). Marcarla `done` afirmaría un cierre que no ocurrió.
+  - ✅ **Q-03** (resuelta): el bloque de CTA se extrajo a `components/sections/cta-band.tsx` y se sustituyeron las tres copias.
+  - ✅ **Q-04** (resuelta): `scripts/verificar-rutas-dinamicas.mjs` + `npm run verify:rutas` comprueban AS-03 contra el `prerender-manifest` real de Next, no contra el texto fuente.

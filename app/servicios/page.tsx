@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ContactCta } from "@/components/contact-cta";
+import { CtaBand } from "@/components/sections/cta-band";
 import { SERVICIOS } from "@/content/servicios";
 import { buildBreadcrumbJsonLd, buildMetadata, jsonLdScript } from "@/lib/seo";
 
@@ -62,18 +62,10 @@ export default function Servicios() {
           ))}
         </ul>
 
-        <div className="mt-12 rounded-xl bg-navy p-8 text-white">
-          <h2 className="font-display text-2xl">
-            ¿No sabes cuál de los cinco necesitas?
-          </h2>
-          <p className="mt-3 text-white/85">
-            Cuéntanos tu caso y te decimos por dónde empezar. No tienes que
-            tenerlo resuelto para escribirnos.
-          </p>
-          <div className="mt-6">
-            <ContactCta />
-          </div>
-        </div>
+        <CtaBand titulo="¿No sabes cuál de los cinco necesitas?">
+          Cuéntanos tu caso y te decimos por dónde empezar. No tienes que
+          tenerlo resuelto para escribirnos.
+        </CtaBand>
       </div>
     </main>
   );

@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-09-20T02:40:00-05:00",
+  "tier": "T2",
+  "stage": "logidev:fase-7-polish",
+  "gates": {
+    "logicraft-trace:code-reviewer": "pass (vuelta 2; vuelta 1 = WARNING con 1 HIGH + 2 MEDIUM, los tres cerrados)",
+    "tests": "pass — unit 40/40, smoke 35/35, e2e 31/31",
+    "axe-core (T052)": "pass — 0 violaciones críticas ni serias en las 13 páginas indexables, más el caso de prefers-reduced-motion",
+    "Lighthouse (T054)": "pass — 13/13 rutas >= 95 en las 4 categorías sobre build de producción",
+    "verify:rutas (AS-03/Q-04)": "pass",
+    "guarda anti-placeholder (T057)": "pass — verificada en ambos sentidos: bloquea con centinelas, deja construir con datos reales",
+    "build": "pass",
+    "lint": "pass (0 problemas)",
+    "npm audit": "pass (0 vulnerabilidades)"
+  },
+  "iterations": 2,
+  "signed_off_by": null,
+  "notes": "FASE PARCIAL A PROPÓSITO: se cierran T049, T050, T051, T052, T054 y T057. Quedan SIN hacer y sin marcar T053 (pasada manual con lector de pantalla, criterio de cierre de SC-004), el Rich Results Test de T055 (requiere URL pública), T056 (Vercel Attack Challenge Mode, cuenta del usuario), T058 (datos reales de contacto y Resend, AS-01/AS-02) y T059 (su checklist incluye T053). El code-reviewer auditó esa lista explícitamente y confirmó que ninguna se podía hacer sin el usuario o sin un despliegue. MEDICIONES REALES: axe-core sobre las 13 páginas indexables → 0 violaciones críticas ni serias. Lighthouse sobre build de producción (next start), las 13 rutas → todas >= 95 en Performance/Accessibility/Best Practices/SEO; la más baja es / con 97 en Performance, la mayoría 99/100/100/100. TRES BUGS ENCONTRADOS DURANTE LA FASE, los tres reales. (1) Sufijo de marca duplicado en el <title> de las 12 páginas que no son el home: buildMetadata concatenaba la marca y el title.template del layout la volvía a añadir. Corregido con title absolute para el home. (2) La metadata de las páginas force-dynamic se emitía en el <body>, no en el <head>, para los user agents que no calzan con el htmlLimitedBots por defecto de Next — comprobado con curl que eso incluye a Googlebot a secas (su patrón cubre AdsBot-Google pero no Googlebot; Bingbot sí está explícito) y a todos los agentes de IA que el sitio habilita en robots.ts. Se optó por htmlLimitedBots /.*/ en vez de una lista curada que se desincroniza, con la precondición documentada de que hoy es barato porque la metadata de esas rutas es síncrona. (3) tests/unit/no-placeholder-contact.test.ts NUNCA se había ejecutado: creado en la fase 2, excluido de test:unit por diseño, y roto desde entonces porque renderizaba un .tsx que el runner no puede transformar. Hasta que T057 lo enganchó al prebuild nadie lo corrió. Reescrito sin renderizar, con la lógica pura movida a lib/contacto.ts. HALLAZGO DEL REVISOR, el más importante de la fase: /terminos-y-condiciones mostraba AVISO_PRIVACIDAD_VERSION como su fecha de vigencia. Dos documentos legales con ciclos de cambio independientes compartiendo constante producía una afirmación falsa en ambas direcciones, y el smoke test consagraba la reutilización en vez de detectarla. Corregido con TERMINOS_VERSION aparte y un guardrail a nivel de IMPORT (tests/unit/versiones-legales.test.ts), porque mientras ambas constantes valgan lo mismo una aserción sobre el valor es ciega al bug. Verificado por mutación. Q-03 y Q-04 cerradas: extracción de CtaBand, y verificación de AS-03 contra el prerender-manifest real de Next vía el script verify:rutas. T057 verificado en AMBOS sentidos: con placeholders npm run build sale con exit 1; con WHATSAPP_NUMBER y LEADS_NOTIFY_EMAIL reales, la guarda pasa 4/4 y el build completa.",
+  "files": {
+    "app/nosotros/page.tsx": "cadddf493cfb8c04d7efcad499f5ba69cb78e936913f3e82170eaf239a84406d",
+    "app/terminos-y-condiciones/page.tsx": "f9ef1232d9961e1dc256a1db697336e737cb6da242ddb641ce2d150934edb15c",
+    "components/sections/cta-band.tsx": "fb303496bebff4002ae9eb5d5d9bf52022eedbad6e6b9be1f91fb279db375924",
+    "content/legal.ts": "e938c01b2f18533a6f992c30f965e7598da4ce0dbab37eeca55c1f7ee46a9a8d",
+    "lib/contacto.ts": "d5fdd85ab194afb256b647f75e9fdcdbf94aea3bf8cb9f2e2d38e441acb876cf",
+    "lib/seo.ts": "d0dac506a5fed9cbdf7b016d670bf23206540470eac3cd1d90b057a0fe790cf9",
+    "next.config.ts": "180c50757ecd08f482c10333a7d5eb2b85fd8ae3929780a5d1370acfb854f5cf",
+    "package.json": "9d0515bc9fdf2f2ac71d797a4e17fffff99f650061800bab4e8127d2bd9575e3",
+    "scripts/verificar-rutas-dinamicas.mjs": "fb979987aaad21485ee720977dcb471874adb74637e24f82523bda658e316d4a",
+    "components/contact-cta.tsx": "8b6d7c0b01b0df42348e91bec1cd2efd21684e10923c1a4be47b87d9c712b72d",
+    "tests/e2e/accessibility.spec.ts": "ad2dea709424396b0328ea321cecdf21d8bb7d57e4baa194951200343219e5aa",
+    "tests/smoke/json-ld.spec.ts": "e0128f9c70970d5e30b1c6d18070aa96815b29b6392cae47bd9dd1dd8078cf63",
+    "tests/smoke/nosotros-legales.spec.ts": "c3416c7c1670ea030853ba85e1937dcee2df08f8f80e17040045dc940298d03c",
+    "tests/unit/no-placeholder-contact.test.ts": "2569cf641e7adc762ac3cc1cc17bd5db3e6c9f3bbe880e751089541e1113ec81",
+    "tests/unit/versiones-legales.test.ts": "b14f371257c34a591f9b5621959ef0f98b69e647d06f7e0e32dce90cdc28a8eb"
+  },
+  "decision_ids": [],
+  "assumption_ids": [
+    "AS-01",
+    "AS-02"
+  ],
+  "prev_hash": "8d240c03438454af70e4af0038638424a4d4d7954fca8942713f3811a290fd68"
+}
