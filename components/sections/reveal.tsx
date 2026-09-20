@@ -39,7 +39,11 @@ export function Reveal({
   useEffect(() => setMontado(true), []);
 
   if (!montado || movimientoReducido) {
-    return className ? <div className={className}>{children}</div> : <>{children}</>;
+    return className ? (
+      <div className={className}>{children}</div>
+    ) : (
+      <>{children}</>
+    );
   }
 
   return (
@@ -48,7 +52,11 @@ export function Reveal({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.45, delay: delay / 1000, ease: [0.16, 1, 0.3, 1] }}
+      transition={{
+        duration: 0.45,
+        delay: delay / 1000,
+        ease: [0.16, 1, 0.3, 1],
+      }}
     >
       {children}
     </motion.div>

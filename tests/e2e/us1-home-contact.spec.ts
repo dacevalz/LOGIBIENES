@@ -38,6 +38,36 @@ test("el contacto está a un clic desde cualquier página", async ({ page }) => 
   }
 });
 
+test("el FORMULARIO es alcanzable, no solo el CTA de WhatsApp", async ({
+  page,
+}) => {
+  /*
+   * Esta aserción existe porque la de arriba no bastaba, y se descubrió en
+   * producción. `contact-cta.tsx` devuelve UN destino: WhatsApp si hay número
+   * real (AS-01), `/contacto` si no. Mientras WHATSAPP_NUMBER fue un
+   * centinela, los CTA llevaban al formulario y todo parecía cubierto. Al
+   * poner el número real en producción, los cuatro CTA de cada página se
+   * volvieron WhatsApp a la vez y `/contacto` quedó huérfana: indexable y en
+   * el sitemap, pero sin una sola ruta de navegación que llegara a ella.
+   *
+   * El test anterior siguió en verde todo ese tiempo, porque comprobaba que
+   * hubiera "un" contacto a un clic, no que el formulario fuera alcanzable.
+   * Son dos invariantes distintos: quien no usa WhatsApp —o está en un
+   * escritorio sin la aplicación— depende del segundo.
+   */
+  for (const ruta of ["/", "/servicios", "/nosotros", "/preguntas-frecuentes"]) {
+    await page.goto(ruta);
+
+    const alFormulario = page.locator('a[href="/contacto"]');
+    await expect(
+      alFormulario.first(),
+      `${ruta} no ofrece ninguna ruta de navegación al formulario: con ` +
+        `WHATSAPP_NUMBER configurado, todos los CTA apuntan a WhatsApp y ` +
+        `/contacto queda inalcanzable salvo escribiendo la URL a mano.`,
+    ).toBeVisible();
+  }
+});
+
 test("el envío por fetch responde sin recargar y pinta confirmación", async ({
   page,
 }) => {

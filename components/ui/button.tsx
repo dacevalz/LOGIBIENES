@@ -25,7 +25,8 @@ const SIZES: Record<ButtonSize, string> = {
 };
 
 const VARIANTS: Record<ButtonVariant, string> = {
-  primary: "bg-electric text-white shadow-electric hover:bg-navy hover:shadow-lift",
+  primary:
+    "bg-electric text-white shadow-electric hover:bg-navy hover:shadow-lift",
   secondary:
     "border-2 border-navy/25 bg-white/60 text-navy hover:border-navy hover:bg-navy hover:text-white",
   inverse:

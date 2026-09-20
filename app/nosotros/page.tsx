@@ -34,7 +34,10 @@ export default function Nosotros() {
       />
 
       <div data-content>
-        <PageHeader eyebrow="Nosotros" titulo="Una inmobiliaria simple y digital" />
+        <PageHeader
+          eyebrow="Nosotros"
+          titulo="Una inmobiliaria simple y digital"
+        />
 
         <div className="mt-10 space-y-6 text-lg leading-relaxed text-carbon/90">
           <p>

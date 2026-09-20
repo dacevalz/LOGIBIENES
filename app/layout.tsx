@@ -46,11 +46,23 @@ const organizationJsonLd = {
   },
 };
 
+/**
+ * `/contacto` está aquí por una razón que no es obvia: el botón de CTA NO
+ * lleva al formulario. `contact-cta.tsx` resuelve WhatsApp cuando existe un
+ * número real (AS-01) y solo cae a `/contacto` cuando no lo hay — así que el
+ * día que se configuró `WHATSAPP_NUMBER` en producción, los cuatro CTA de
+ * cada página pasaron a WhatsApp de golpe y el formulario quedó huérfano:
+ * seguía en el sitemap e indexable, pero sin una sola ruta de navegación.
+ *
+ * Esta entrada es esa ruta. No sobra con el CTA: es para quien no usa
+ * WhatsApp, o está en un escritorio sin la aplicación instalada.
+ */
 const NAV = [
   { href: "/servicios", label: "Servicios" },
   { href: "/propiedades", label: "Propiedades" },
   { href: "/nosotros", label: "Nosotros" },
   { href: "/preguntas-frecuentes", label: "Preguntas frecuentes" },
+  { href: "/contacto", label: "Contacto" },
 ];
 
 const LEGAL = [

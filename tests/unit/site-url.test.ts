@@ -17,7 +17,10 @@ import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
  * vacía) ya había roto el remitente de Resend en `lib/leads.ts`: por eso el
  * caso de la CADENA VACÍA es el que de verdad importa aquí, no el de ausencia.
  */
-const CLAVES = ["NEXT_PUBLIC_SITE_URL", "VERCEL_PROJECT_PRODUCTION_URL"] as const;
+const CLAVES = [
+  "NEXT_PUBLIC_SITE_URL",
+  "VERCEL_PROJECT_PRODUCTION_URL",
+] as const;
 
 type Entorno = Partial<Record<(typeof CLAVES)[number], string>>;
 
@@ -80,9 +83,9 @@ describe("SITE_URL", () => {
   });
 
   it("una VERCEL_PROJECT_PRODUCTION_URL vacía no produce 'https://'", async () => {
-    expect(
-      await siteUrlCon({ VERCEL_PROJECT_PRODUCTION_URL: "" }),
-    ).toBe("http://localhost:3000");
+    expect(await siteUrlCon({ VERCEL_PROJECT_PRODUCTION_URL: "" })).toBe(
+      "http://localhost:3000",
+    );
   });
 
   it("quita la barra final para que los canonical no queden con doble barra", async () => {
@@ -101,7 +104,10 @@ describe("SITE_URL", () => {
       {},
     ] satisfies Entorno[]) {
       const url = await siteUrlCon(entorno);
-      expect(() => new URL(url), `entorno: ${JSON.stringify(entorno)}`).not.toThrow();
+      expect(
+        () => new URL(url),
+        `entorno: ${JSON.stringify(entorno)}`,
+      ).not.toThrow();
     }
   });
 });

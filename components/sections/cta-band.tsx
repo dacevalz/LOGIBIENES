@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { ReactNode } from "react";
 import { ContactCta } from "@/components/contact-cta";
 
@@ -40,8 +41,28 @@ export function CtaBand({
           {titulo}
         </h2>
         <p className="mt-4 text-lg leading-relaxed text-white/85">{children}</p>
-        <div className="mt-8">
+
+        {/*
+          El CTA principal es WhatsApp cuando hay número real (AS-01). La
+          segunda vía NO es decorativa: sin ella esta banda ofrece un solo
+          canal, y quien no use WhatsApp —o esté en un escritorio sin la
+          aplicación— se queda sin forma de escribir. `contact-cta.tsx` no
+          puede resolverlo solo: por contrato devuelve UN destino.
+        */}
+        <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
           <ContactCta />
+          <Link
+            href="/contacto"
+            className="group inline-flex min-h-11 items-center gap-2 text-white/85 underline underline-offset-4 transition-colors duration-200 hover:text-white"
+          >
+            o déjanos tus datos
+            <span
+              aria-hidden="true"
+              className="transition-transform duration-300 ease-brand group-hover:translate-x-1 motion-reduce:transform-none"
+            >
+              →
+            </span>
+          </Link>
         </div>
       </div>
     </section>
