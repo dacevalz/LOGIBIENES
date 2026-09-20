@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+/* Tokens de marca Logibienes (Constitución V — fuente única, consumida por todos los componentes).
+   Tailwind v4 es CSS-first: el theme vive aquí, no en tailwind.config.ts. */
+@theme {
+  --color-navy: #0e1f3c;
+  --color-carbon: #121417;
+  --color-frost: #f4f6f8;
+  --color-electric: #2d5bff;
+
+  --font-display: var(--font-anton), system-ui, sans-serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+}
+
+body {
+  background: var(--color-frost);
+  color: var(--color-carbon);
+  font-family: var(--font-sans);
+}
