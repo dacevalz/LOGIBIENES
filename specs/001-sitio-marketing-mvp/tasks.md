@@ -90,15 +90,15 @@ Next.js App Router de una sola aplicación (`app/`, `components/`, `content/`, `
 
 **Independent Test**: entrar directamente a cada URL de servicio y verificar contenido específico (no genérico).
 
-- [ ] T031 [US2] Implementar `app/servicios/page.tsx` (hub, depende de T008, T014; metadata + `BreadcrumbList`), itera `content/servicios.ts`, contenedor `data-content`
-- [ ] T032 [P] [US2] Implementar `app/servicios/compra-venta/page.tsx` (contenedor `data-content`)
-- [ ] T033 [P] [US2] Implementar `app/servicios/arrendamientos/page.tsx` (contenedor `data-content`)
-- [ ] T034 [P] [US2] Implementar `app/servicios/administracion-inmuebles/page.tsx` (contenedor `data-content`)
-- [ ] T035 [P] [US2] Implementar `app/servicios/proyectos-y-construccion/page.tsx` (contenedor `data-content`)
-- [ ] T036 [P] [US2] Implementar `app/servicios/asesoria-y-avaluos/page.tsx` (contenedor `data-content`)
-- [ ] T037 [US2] Metadata única + JSON-LD `Service` (provider → `Organization` de `layout.tsx`) + `BreadcrumbList` (vía `lib/seo.ts`) en las 5 páginas de servicio (depende de T032-T036)
-- [ ] T038 [P] [US2] `tests/e2e/us2-servicios.spec.ts` — el hub enlaza a las 5, cada página muestra su propio contenido y CTA
-- [ ] T039 [P] [US2] `tests/smoke/servicios.spec.ts` (Playwright, `javaScriptEnabled:false`) — hub + 5 páginas: `[data-content]` presente y sin ocultamiento en línea
+- [x] T031 [US2] Implementar `app/servicios/page.tsx` (hub, depende de T008, T014; metadata + `BreadcrumbList`), itera `content/servicios.ts`, contenedor `data-content`
+- [x] T032 [P] [US2] Implementar `app/servicios/compra-venta/page.tsx` (contenedor `data-content`)
+- [x] T033 [P] [US2] Implementar `app/servicios/arrendamientos/page.tsx` (contenedor `data-content`)
+- [x] T034 [P] [US2] Implementar `app/servicios/administracion-inmuebles/page.tsx` (contenedor `data-content`)
+- [x] T035 [P] [US2] Implementar `app/servicios/proyectos-y-construccion/page.tsx` (contenedor `data-content`)
+- [x] T036 [P] [US2] Implementar `app/servicios/asesoria-y-avaluos/page.tsx` (contenedor `data-content`)
+- [x] T037 [US2] Metadata única + JSON-LD `Service` (provider → `Organization` de `layout.tsx`) + `BreadcrumbList` (vía `lib/seo.ts`) en las 5 páginas de servicio (depende de T032-T036)
+- [x] T038 [P] [US2] `tests/e2e/us2-servicios.spec.ts` — el hub enlaza a las 5, cada página muestra su propio contenido y CTA
+- [x] T039 [P] [US2] `tests/smoke/servicios.spec.ts` (Playwright, `javaScriptEnabled:false`) — hub + 5 páginas: `[data-content]` presente y sin ocultamiento en línea
 
 **Checkpoint**: US1 y US2 funcionan juntas e independientemente.
 

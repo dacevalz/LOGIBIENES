@@ -35,3 +35,15 @@
 - **Disparador:** escribí un test e2e que interceptaba `/api/leads` con `page.route` y devolvía un 303 para comprobar que el formulario aterrizaba en `/gracias`. El revisor señaló que nunca ejecutaba `route.ts` ni `procesarLead`: solo comprobaba que un navegador sigue un `Location`, algo que habría pasado igual contra un servidor con la lógica completamente rota.
 - **Lección:** un mock puesto en la capa de red del navegador no prueba la aplicación, prueba el navegador. Un test verde así infla la cuenta de cobertura y da una falsa sensación de que la ruta está cubierta.
 - **Guardrail:** antes de dar por bueno un test con `page.route`/mock de red, preguntar qué línea de código propio ejecuta. Si la respuesta es "ninguna", borrarlo en vez de re-etiquetarlo — y si hace falta cubrir esa ruta, buscar una entrada determinista que recorra el código real.
+
+## 2026-09-20 — 001-sitio-marketing-mvp / Phase 4 (User Story 2)
+
+- **Disparador:** escribí en un comentario de código `DESVIACIÓN DECLARADA (D-09)` mientras implementaba, con la intención de crear el nodo al cerrar la fase. El revisor cruzó el comentario contra `.trace/graph/nodes.jsonl`, no encontró `D-09`, y lo reportó como MEDIUM.
+- **Lección:** citar un identificador de trazabilidad que todavía no existe es peor que no citarlo: quien lee el código asume que hay un registro auditable detrás, y no lo hay. El comentario aparenta rigor mientras la cadena está rota justo en el punto que el proceso usa para justificar la desviación.
+- **Guardrail:** el nodo del grafo se escribe **antes** que el comentario que lo cita, no al cerrar la fase. Antes de cerrar cualquier gate, correr un `grep` de los IDs `D-`/`AS-`/`Q-` citados en el diff contra `nodes.jsonl` y confirmar que todos existen.
+
+## 2026-09-20 — 001-sitio-marketing-mvp / Phase 4 (cierre)
+
+- **Disparador:** el script de cierre de fase falló con `SyntaxError` porque el texto de `notes` contenía comillas simples y yo lo pasaba dentro de un `node -e '...'` en bash. La cadena `&&` cortó y no se aplicó nada — por suerte de forma atómica.
+- **Lección:** el texto de auditoría en español lleva comillas, guiones y acentos; meterlo inline en un `node -e` con comillas simples es frágil por construcción, y un fallo a mitad de camino podría dejar el ledger o el grafo a medio escribir.
+- **Guardrail:** todo cierre de fase (marcar tareas + ledger + grafo + lecciones) va en un archivo `.mjs` en el scratchpad y se ejecuta con `node archivo.mjs`, nunca inline. Y verificar después con `ledger.js verify` que la cadena quedó íntegra.

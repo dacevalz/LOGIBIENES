@@ -1,0 +1,29 @@
+{
+  "timestamp": "2026-09-20T01:45:00-05:00",
+  "tier": "T2",
+  "stage": "logidev:fase-4-user-story-2",
+  "gates": {
+    "logicraft-trace:code-reviewer": "pass (vuelta 2; vuelta 1 = APPROVE con 2 MEDIUM + 1 LOW)",
+    "tests": "pass — unit 28/28, smoke 9/9, e2e 10/10",
+    "build": "pass (las 5 rutas de servicio como SSG prerenderizadas)",
+    "lint": "pass (0 problemas)",
+    "npm audit": "pass (0 vulnerabilidades)"
+  },
+  "iterations": 2,
+  "signed_off_by": null,
+  "notes": "T2 no exige sign-off humano nombrado. No se invocó security-reviewer y el code-reviewer validó la decisión de alcance: sin input de usuario nuevo, sin endpoints nuevos, sin criptografía. DESVIACIÓN D-09: las 5 páginas de servicio se unificaron en una ruta [slug] con generateStaticParams en vez de los cinco page.tsx de T032-T036; el revisor la evaluó a fondo, recomendó MANTENERLA, y confirmó que dynamicParams=false y notFound() no son redundantes (contrato de enrutamiento vs. type narrowing y defensa en profundidad). Correcciones de la vuelta 2: (1) MEDIUM de proceso — el código citaba la decisión D-09 como ya trazada cuando el nodo no existía en el grafo; se creó antes de cerrar el gate. (2) MEDIUM — el test de contenido distinto solo comparaba los h1, lo que habría pasado igual con cinco cuerpos genéricos; se reforzó a comparar el contenedor data-content completo menos el encabezado. El revisor señaló después que ese test sigue sin ser autosuficiente (descripcionCorta y ctaTexto ya varían por servicio, así que bastarían para dar 5 elementos distintos), pero que el test vecino ata el primer párrafo al texto real de descripcionLarga y entre los dos la cobertura queda cerrada — no es corrección pendiente. LOW diferido a T055: Service.provider es un objeto embebido y no una referencia por @id a la Organization del layout; cumple el contrato tal como está escrito.",
+  "files": {
+    "app/servicios/page.tsx": "e6a17f6f7f18d4bc60d7a3dc729ddfd88ca86793fd95f6e64c8dbb28e6ad9cbc",
+    "app/servicios/[slug]/page.tsx": "a6a1ab1dc1ee40a9e131f7e0bb0827df1abb0303ad415c09b13bdcf467d300f7",
+    "tests/e2e/us2-servicios.spec.ts": "7a41897fbf167c4f46f7f3f6525e073b33c354c30955f92f1fef69830057263e",
+    "tests/smoke/servicios.spec.ts": "7f80aaeefe1e33bd76d934f9fac1ef598a33a7c08eb10e168538fbb39631d4d7"
+  },
+  "decision_ids": [
+    "D-09"
+  ],
+  "assumption_ids": [
+    "AS-01",
+    "AS-02"
+  ],
+  "prev_hash": "a65e0b52896ba97ba79501147ec601b539924972ad2cf323a3197881c1b38036"
+}
