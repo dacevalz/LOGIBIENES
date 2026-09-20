@@ -10,5 +10,11 @@
     "fingerprint": "sha256:44c9b7d4ac092aa4e7449daa47e18609f38cc6e2edc05f61774c2c090189208e",
     "sealed_at": "2026-09-20T03:59:16.245Z",
     "source_spec_fingerprint": "sha256:478de6050419ec5674a748d70018b7e03d9d15fa3a723d76b8fad892530e1374"
+  },
+  "tasks": {
+    "file": "specs/001-sitio-marketing-mvp/tasks.md",
+    "fingerprint": "sha256:d60cc8457503c5cd9af3b0de866d19e7860713568b494191eee8ed4b37d0ded2",
+    "sealed_at": "2026-09-20T04:23:40.272Z",
+    "source_plan_fingerprint": "sha256:44c9b7d4ac092aa4e7449daa47e18609f38cc6e2edc05f61774c2c090189208e"
   }
 }
