@@ -12,12 +12,28 @@ import type { Metadata } from "next";
  *   1. NEXT_PUBLIC_SITE_URL — el dominio real, cuando exista.
  *   2. VERCEL_PROJECT_PRODUCTION_URL — lo inyecta Vercel en cada deploy.
  *   3. localhost — desarrollo.
+ *
+ * Cada escalón se resuelve con `?.trim() ||`, NO con `??`. Una variable
+ * declarada pero VACÍA es el caso normal, no el raro: `.env.example` trae
+ * líneas `CLAVE=` (dotenv las parsea como cadena vacía) y Vercel inyecta en el
+ * build las variables marcadas como *sensitive* con valor vacío en vez de
+ * omitirlas. Con `??` esa cadena vacía ganaba la resolución y el build moría:
+ *
+ *   TypeError: Invalid URL
+ *   > Build error occurred
+ *   [Error: Failed to collect page data for /_not-found]
+ *
+ * Un mensaje que no nombra ninguna variable de entorno y señala una ruta que
+ * nadie escribió. `||` hace que la cadena vacía caiga al siguiente escalón,
+ * que es lo que el orden de arriba siempre quiso decir.
+ * Lo fija `tests/unit/site-url.test.ts`.
  */
+const origenDeclarado = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+const origenVercel = process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim();
+
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : "http://localhost:3000")
+  origenDeclarado ||
+  (origenVercel ? `https://${origenVercel}` : "http://localhost:3000")
 ).replace(/\/+$/, "");
 
 export const SITE_NAME = "Logibienes";
