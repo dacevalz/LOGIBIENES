@@ -70,12 +70,20 @@ const LEGAL = [
   { href: "/terminos-y-condiciones", label: "Términos y condiciones" },
 ];
 
-/** Flecha del footer: se desplaza al pasar el cursor, sin mover el texto. */
+/**
+ * Flecha del footer: se desplaza al pasar el cursor, sin mover el texto.
+ *
+ * El `py-1.5` no es estética. Sin él el enlace mide 21 px de alto, que es
+ * incómodo para un pulgar. No se sube a los 44 px de la guía porque doce
+ * enlaces por columna a esa altura producen un footer de pantalla y media;
+ * con el `space-y-2.5` de la lista, la separación entre centros queda en
+ * ~43 px, que es lo que de verdad evita el toque equivocado.
+ */
 function FooterLink({ href, children }: { href: string; children: string }) {
   return (
     <Link
       href={href}
-      className="group inline-flex items-start gap-2 text-sm text-white/75 transition-colors duration-200 hover:text-white"
+      className="group inline-flex items-start gap-2 py-1.5 text-sm text-white/75 transition-colors duration-200 hover:text-white"
     >
       <span
         aria-hidden="true"
@@ -116,7 +124,7 @@ export default function RootLayout({
           <div className="shell flex h-[var(--header-h)] max-w-6xl items-center gap-4">
             <Link
               href="/"
-              className="shrink-0 rounded-lg transition-opacity duration-200 hover:opacity-75"
+              className="flex min-h-11 shrink-0 items-center rounded-lg transition-opacity duration-200 hover:opacity-75"
             >
               <Image
                 src="/logo/navy-b.png"
@@ -144,7 +152,17 @@ export default function RootLayout({
                 </ul>
               </nav>
 
-              <ContactCta size="sm" className="hidden sm:inline-flex" />
+              {/*
+                El `hidden` va en un envoltorio, NO en el className del CTA.
+                `buttonClasses()` ya declara `inline-flex`, y Tailwind resuelve
+                los conflictos por el orden de la hoja generada, no por el
+                orden del atributo class: `inline-flex` ganaba y el botón nunca
+                se ocultaba. A 320 px el header medía 340 y las siete páginas
+                tenían scroll horizontal.
+              */}
+              <div className="hidden sm:block">
+                <ContactCta size="sm" />
+              </div>
 
               {/*
                 Menú móvil sobre <details> nativo, por la misma razón que el

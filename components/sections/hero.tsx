@@ -76,9 +76,19 @@ export function Hero() {
           y con alguien que responde.
         </p>
 
-        <div className="animate-rise mt-10 flex flex-wrap items-center gap-4 [animation-delay:260ms]">
-          <ContactCta />
-          <Link href="/servicios" className={buttonClasses("inverse")}>
+        {/*
+          Apilados y a todo el ancho por debajo de `sm`. Con `flex-wrap` los
+          dos botones caían en líneas distintas pero con anchos distintos
+          —el de WhatsApp es bastante más largo que "Ver servicios"— y el
+          bloque se leía desalineado. A todo el ancho además el pulgar acierta
+          sin apuntar.
+        */}
+        <div className="animate-rise mt-10 flex flex-col items-stretch gap-3 [animation-delay:260ms] sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+          <ContactCta className="w-full sm:w-auto" />
+          <Link
+            href="/servicios"
+            className={`${buttonClasses("inverse")} w-full sm:w-auto`}
+          >
             Ver servicios
           </Link>
         </div>

@@ -62,7 +62,10 @@ export function Checkbox({
       <input
         type="checkbox"
         id={id}
-        className={`mt-1 size-5 shrink-0 accent-electric focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-electric ${className}`}
+        // `size-6` (24 px), no `size-5`: 20 px queda por debajo del mínimo de
+        // WCAG 2.2 para un control táctil. La etiqueta de al lado también lo
+        // activa, pero el cuadro es lo que la gente intenta tocar primero.
+        className={`mt-0.5 size-6 shrink-0 accent-electric focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-electric ${className}`}
         {...props}
       />
       <label htmlFor={id} className="text-sm text-carbon">
