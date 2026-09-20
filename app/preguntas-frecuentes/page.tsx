@@ -1,5 +1,6 @@
 import { CtaBand } from "@/components/sections/cta-band";
 import { FaqAccordion } from "@/components/sections/faq-accordion";
+import { PageHeader } from "@/components/sections/page-header";
 import { FAQ } from "@/content/faq";
 import { buildBreadcrumbJsonLd, buildMetadata, jsonLdScript } from "@/lib/seo";
 
@@ -31,7 +32,7 @@ const faqJsonLd = {
 
 export default function PreguntasFrecuentes() {
   return (
-    <main id="contenido" className="mx-auto max-w-3xl px-4 py-16">
+    <main id="contenido" className="shell section-y max-w-3xl">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScript(breadcrumb) }}
@@ -42,15 +43,12 @@ export default function PreguntasFrecuentes() {
       />
 
       <div data-content>
-        <h1 className="font-display text-4xl text-navy sm:text-5xl">
-          Preguntas frecuentes
-        </h1>
-        <p className="mt-4 text-lg text-carbon/80">
+        <PageHeader eyebrow="Respuestas" titulo="Preguntas frecuentes">
           Lo que más nos preguntan, respondido de frente. Si lo tuyo no está
           aquí, escríbenos y te respondemos igual.
-        </p>
+        </PageHeader>
 
-        <div className="mt-12">
+        <div className="mt-14">
           <FaqAccordion />
         </div>
 

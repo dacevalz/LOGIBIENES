@@ -11,6 +11,12 @@ import { ContactCta } from "@/components/contact-cta";
  * estado inicial oculto sobre el contenido que debe verse sin scroll es
  * exactamente lo que prohíbe la Constitución I.
  *
+ * La entrada escalonada de abajo es CSS (`animate-rise` + `animation-delay`),
+ * no Framer Motion: una animación de hoja de estilos no emite `opacity:0` EN
+ * LÍNEA durante el SSR, así que el smoke test de T025 sigue pasando y el HTML
+ * que ve un agente de IA es el mismo de siempre. Bajo `prefers-reduced-motion`
+ * la regla global de `globals.css` la colapsa a su estado final.
+ *
  * El video es decorativo: `aria-hidden` lo saca del árbol de accesibilidad, lo
  * que además evita que axe-core le aplique `video-caption` (T052). Bajo
  * `prefers-reduced-motion: reduce` el video se oculta y aparece el poster, con
@@ -18,7 +24,7 @@ import { ContactCta } from "@/components/contact-cta";
  */
 export function Hero() {
   return (
-    <section className="relative isolate flex min-h-[calc(100svh-5rem)] items-center overflow-hidden bg-navy">
+    <section className="relative isolate flex min-h-[calc(100svh_-_var(--header-h))] items-center overflow-hidden bg-navy">
       <video
         className="absolute inset-0 -z-10 size-full object-cover motion-reduce:hidden"
         poster="/video/hero-poster.webp"
@@ -42,31 +48,51 @@ export function Hero() {
       />
 
       {/* Scrim: sin él, el texto blanco no alcanza 4.5:1 sobre un video que
-          cambia de luminancia cuadro a cuadro. */}
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-navy/75" />
+          cambia de luminancia cuadro a cuadro. Diagonal en vez de plano — la
+          opacidad mínima (0.74 navy) está calculada para no bajar de AA ni
+          sobre un fotograma blanco. Ver `hero-scrim` en globals.css. */}
+      <div aria-hidden="true" className="hero-scrim absolute inset-0 -z-10" />
+      <div
+        aria-hidden="true"
+        className="grid-texture absolute inset-0 -z-10 opacity-50"
+      />
 
-      <div data-content className="mx-auto w-full max-w-6xl px-4 py-20">
-        <p className="font-display text-lg tracking-wide text-white/90">
+      <div data-content className="shell w-full max-w-6xl py-24">
+        <p className="animate-rise inline-flex items-center gap-2.5 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 font-display text-sm uppercase tracking-[0.18em] text-white backdrop-blur-sm">
+          <span
+            aria-hidden="true"
+            className="size-1.5 rounded-full bg-electric"
+          />
           Inmobiliaria simple y digital
         </p>
-        <h1 className="mt-4 max-w-4xl font-display text-4xl leading-tight text-white sm:text-6xl">
+
+        <h1 className="animate-rise mt-7 max-w-5xl font-display text-[clamp(2.5rem,6.4vw,5rem)] leading-[1.05] tracking-[-0.015em] text-white [animation-delay:90ms]">
           Un solo lugar para comprar, vender, arrendar o invertir en bienes
           raíces
         </h1>
-        <p className="mt-6 max-w-2xl text-xl text-white/90">
+
+        <p className="animate-rise mt-6 max-w-2xl text-lg leading-relaxed text-white/90 [animation-delay:180ms] sm:text-xl">
           Fácil, rápido, digital. Sin vueltas, sin papeleo que no te explicaron,
           y con alguien que responde.
         </p>
 
-        <div className="mt-10 flex flex-wrap gap-4">
+        <div className="animate-rise mt-10 flex flex-wrap items-center gap-4 [animation-delay:260ms]">
           <ContactCta />
-          <Link
-            href="/servicios"
-            className={`${buttonClasses("secondary")} border-white text-white hover:bg-white hover:text-navy`}
-          >
+          <Link href="/servicios" className={buttonClasses("inverse")}>
             Ver servicios
           </Link>
         </div>
+      </div>
+
+      {/* Señal de scroll: dice que hay más abajo sin ocupar sitio en el flujo.
+          Se esconde en pantallas bajas, donde competiría con los CTA. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-8 hidden justify-center md:flex"
+      >
+        <span className="flex h-10 w-6 items-start justify-center rounded-full border border-white/40 p-1.5">
+          <span className="animate-cue size-1 rounded-full bg-white/90" />
+        </span>
       </div>
     </section>
   );

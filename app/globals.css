@@ -1,7 +1,16 @@
 @import "tailwindcss";
 
-/* Tokens de marca Logibienes (Constitución V — fuente única, consumida por todos los componentes).
-   Tailwind v4 es CSS-first: el theme vive aquí, no en tailwind.config.ts. */
+/* ---------------------------------------------------------------------------
+   Sistema de diseño Logibienes — fuente única de tokens (Constitución V).
+   Tailwind v4 es CSS-first: el theme vive aquí, no en tailwind.config.ts.
+
+   La paleta y las familias tipográficas son EXACTAMENTE las aprobadas en
+   `.trace/ingestion/logibienes-branding/branding.md`; no se agrega ni un color
+   nuevo. Lo que sí se agrega son tokens DERIVADOS (radios, sombras, easing,
+   animaciones): no inventan marca, solo fijan el ritmo visual en un solo lugar
+   para que cada componente deje de decidirlo por su cuenta — que es la razón
+   por la que hoy conviven `rounded-lg`, `rounded-xl` y tres sombras distintas.
+--------------------------------------------------------------------------- */
 @theme {
   --color-navy: #0e1f3c;
   --color-carbon: #121417;
@@ -10,10 +19,196 @@
 
   --font-display: var(--font-anton), system-ui, sans-serif;
   --font-sans: var(--font-inter), system-ui, sans-serif;
+
+  --radius-card: 1rem;
+  --radius-band: 1.5rem;
+
+  /* Teñidas de navy a propósito: una sombra gris neutra sobre #f4f6f8 se ve
+     sucia, no profunda. */
+  --shadow-card:
+    0 1px 2px rgb(14 31 60 / 0.05), 0 12px 28px -20px rgb(14 31 60 / 0.45);
+  --shadow-lift:
+    0 2px 6px rgb(14 31 60 / 0.07), 0 28px 50px -28px rgb(14 31 60 / 0.55);
+  --shadow-electric: 0 10px 24px -12px rgb(45 91 255 / 0.65);
+
+  /* Un solo easing para todo el sitio. Sale rápido y frena largo: es lo que
+     hace que una tarjeta se sienta "asentada" y no elástica. */
+  --ease-brand: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Entrada del hero. Es CSS, no JS: corre para un crawler que aplique estilos
+     y no deja `opacity:0` EN LÍNEA en el HTML servido, que es justo lo que
+     vigila `tests/smoke/_contenido-sin-js.ts`. */
+  --animate-rise: rise 600ms var(--ease-brand) both;
+  --animate-cue: cue 1900ms ease-in-out infinite;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes cue {
+    0%,
+    100% {
+      opacity: 0;
+      transform: translateY(0);
+    }
+    30% {
+      opacity: 1;
+    }
+    70% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
 }
+
+/* --------------------------------------------------------------------------
+   Base
+-------------------------------------------------------------------------- */
+
+:root {
+  /* Alto del header sticky. Lo consumen el hero (para calcular el alto de
+     pantalla completa) y `scroll-padding-top` (para que un ancla de la FAQ no
+     aterrice debajo de la barra). Un solo número, tres consumidores. */
+  --header-h: 5rem;
+}
+
+/* Sin esto, un ancla de la FAQ aterriza DEBAJO del header sticky. Es el
+   arreglo de verdad para la barra fija; no confundir con scroll suave. */
+html {
+  scroll-padding-top: calc(var(--header-h) + 1.5rem);
+}
+
+/* NO agregar `scroll-behavior: smooth` aquí.
+   Se probó y se quitó: el scroll suave vuelve inestable el
+   `scrollIntoView` que hace Playwright antes de cada clic, y los tres tests
+   de envío sin JavaScript empezaron a morir en "element is not stable" al
+   marcar la casilla de consentimiento. Un adorno de 300 ms no vale un
+   formulario que a veces no se puede llenar — ni para un test ni para quien
+   navega con teclado. */
 
 body {
   background: var(--color-frost);
   color: var(--color-carbon);
   font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Anton es una condensada: en tamaños grandes el interletrado por defecto la
+   deja suelta, y los titulares de 2–3 líneas quedan con una viuda de una
+   palabra. `balance`/`pretty` lo arreglan sin tocar el marcado. */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+::selection {
+  background-color: var(--color-electric);
+  color: #fff;
+}
+
+/* Usamos <details> nativo en la FAQ y en el menú móvil; en ambos el triángulo
+   por defecto estorba al layout flex del <summary>. */
+summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Anillo de foco de marca por defecto. Los componentes que ya declaran el suyo
+   lo siguen ganando; esto cubre lo que no lo declara (Prioridad 1). */
+:focus-visible {
+  outline: 2px solid var(--color-electric);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Utilidades de layout
+-------------------------------------------------------------------------- */
+
+/* Contenedor horizontal del sitio. NO fija `max-width` a propósito: cada
+   página elige su medida (`max-w-6xl` para grillas, `max-w-3xl` para lectura)
+   y así esta utilidad nunca compite con una clase de Tailwind. */
+@utility shell {
+  margin-inline: auto;
+  width: 100%;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+/* Ritmo vertical único de sección. Antes cada página elegía su `py-*` y el
+   salto entre secciones cambiaba de página a página. */
+@utility section-y {
+  padding-block: clamp(4rem, 8vw, 7rem);
+}
+
+/* Documentos legales: medida de lectura acotada y aire extra antes de cada
+   subtítulo, que es lo que vuelve navegable un texto largo. */
+@utility legal-doc {
+  max-width: 68ch;
+
+  & > * + * {
+    margin-block-start: 1.25rem;
+  }
+
+  & > h2 {
+    margin-block-start: 2.75rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Texturas de marca (decorativas, siempre bajo aria-hidden)
+-------------------------------------------------------------------------- */
+
+/* Scrim del hero. Diagonal en vez de plano: da profundidad y deja el borde
+   derecho más limpio para que el video se lea.
+   El mínimo es 0.74 de navy A PROPÓSITO — por debajo de ~0.70, texto blanco
+   sobre un fotograma claro baja de 4.5:1 y el hero deja de cumplir AA. */
+@utility hero-scrim {
+  background-image:
+    linear-gradient(
+      105deg,
+      rgb(14 31 60 / 0.95) 0%,
+      rgb(14 31 60 / 0.86) 45%,
+      rgb(14 31 60 / 0.74) 100%
+    ),
+    linear-gradient(to top, rgb(14 31 60 / 1) 3%, rgb(14 31 60 / 0) 45%);
+}
+
+/* Retícula tenue: eco del isotipo (edificio) del moodboard, sin traer un
+   asset nuevo. */
+@utility grid-texture {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* --------------------------------------------------------------------------
+   Movimiento reducido — red de seguridad global
+-------------------------------------------------------------------------- */
+
+/* Los componentes ya usan `motion-reduce:` donde importa; esto cubre lo que se
+   agregue después y se olvide. `animation-delay: 0` NO es decorativo: sin él,
+   un elemento con `both` y 300 ms de retraso se queda invisible ese tiempo
+   aunque su duración sea cero. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -30,17 +30,21 @@ const ORDEN: readonly CategoriaFaq[] = [
 
 export function FaqAccordion() {
   return (
-    <div className="space-y-12">
+    <div className="space-y-14">
       {ORDEN.map((categoria) => {
         const preguntas = FAQ.filter((p) => p.categoria === categoria);
         if (preguntas.length === 0) return null;
 
         return (
           <section key={categoria}>
-            <h2 className="font-display text-2xl text-navy">
+            <h2 className="flex items-center gap-4 font-display text-2xl tracking-[-0.01em] text-navy">
               {ETIQUETAS[categoria]}
+              <span
+                aria-hidden="true"
+                className="h-px flex-1 bg-gradient-to-r from-navy/20 to-transparent"
+              />
             </h2>
-            <div className="mt-4">
+            <div className="mt-5">
               <Accordion
                 items={preguntas.map((p) => ({
                   id: ID_POR_PREGUNTA.get(p.pregunta)!,

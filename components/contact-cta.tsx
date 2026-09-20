@@ -1,5 +1,9 @@
 import Link from "next/link";
-import { buttonClasses, type ButtonVariant } from "@/components/ui/button";
+import {
+  buttonClasses,
+  type ButtonSize,
+  type ButtonVariant,
+} from "@/components/ui/button";
 import { enlaceWhatsapp } from "@/lib/contacto";
 
 const MENSAJE_PREFIJADO =
@@ -15,13 +19,15 @@ const MENSAJE_PREFIJADO =
  */
 export function ContactCta({
   variant = "primary",
+  size = "md",
   className = "",
 }: {
   variant?: ButtonVariant;
+  size?: ButtonSize;
   className?: string;
 }) {
   const enlace = enlaceWhatsapp(MENSAJE_PREFIJADO);
-  const clases = `${buttonClasses(variant)} ${className}`;
+  const clases = `${buttonClasses(variant, size)} ${className}`;
 
   if (enlace) {
     return (

@@ -14,7 +14,7 @@ export const metadata = buildMetadata({
 
 export default function ContactoGracias() {
   return (
-    <main id="contenido" className="mx-auto max-w-2xl px-4 py-24">
+    <main id="contenido" className="shell section-y max-w-2xl">
       <div data-content>
         <h1 className="font-display text-4xl text-navy">
           Recibimos tu mensaje

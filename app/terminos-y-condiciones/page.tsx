@@ -25,14 +25,15 @@ const breadcrumb = buildBreadcrumbJsonLd([
  */
 export default function TerminosYCondiciones() {
   return (
-    <main id="contenido" className="mx-auto max-w-3xl px-4 py-16">
+    <main id="contenido" className="shell section-y max-w-3xl">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScript(breadcrumb) }}
       />
 
-      <div data-content className="space-y-6">
-        <h1 className="font-display text-4xl text-navy">
+      {/* Ver nota en `/aviso-de-privacidad`: mismo tratamiento tipográfico. */}
+      <div data-content className="legal-doc leading-relaxed text-carbon/90">
+        <h1 className="font-display text-[clamp(2.25rem,5vw,3.25rem)] leading-[1.06] tracking-[-0.015em] text-navy">
           Términos y condiciones
         </h1>
         <p className="text-sm text-carbon/70">

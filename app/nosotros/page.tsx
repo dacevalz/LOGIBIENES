@@ -1,4 +1,5 @@
 import { CtaBand } from "@/components/sections/cta-band";
+import { PageHeader } from "@/components/sections/page-header";
 import { SERVICIOS } from "@/content/servicios";
 import { buildBreadcrumbJsonLd, buildMetadata, jsonLdScript } from "@/lib/seo";
 
@@ -26,18 +27,16 @@ const breadcrumb = buildBreadcrumbJsonLd([
  */
 export default function Nosotros() {
   return (
-    <main id="contenido" className="mx-auto max-w-3xl px-4 py-16">
+    <main id="contenido" className="shell section-y max-w-3xl">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScript(breadcrumb) }}
       />
 
       <div data-content>
-        <h1 className="font-display text-4xl text-navy sm:text-5xl">
-          Una inmobiliaria simple y digital
-        </h1>
+        <PageHeader eyebrow="Nosotros" titulo="Una inmobiliaria simple y digital" />
 
-        <div className="mt-8 space-y-5 text-lg leading-relaxed">
+        <div className="mt-10 space-y-6 text-lg leading-relaxed text-carbon/90">
           <p>
             Logibienes S.A.S. es una sociedad comercial colombiana con domicilio
             en Medellín, Antioquia. Trabajamos bienes raíces en el país, urbanos
@@ -56,23 +55,33 @@ export default function Nosotros() {
           </p>
         </div>
 
-        <h2 className="mt-12 font-display text-2xl text-navy">Qué cubrimos</h2>
-        <ul className="mt-4 space-y-3">
+        <h2 className="mt-16 font-display text-2xl tracking-[-0.01em] text-navy sm:text-3xl">
+          Qué cubrimos
+        </h2>
+        {/* Tarjeta por línea en vez de viñetas: cinco entradas de dos renglones
+            seguidas se leen como un solo bloque gris. */}
+        <ul className="mt-6 divide-y divide-navy/10 overflow-hidden rounded-card border border-navy/10 bg-white shadow-card">
           {SERVICIOS.map((servicio) => (
-            <li key={servicio.slug} className="flex gap-3">
-              <span aria-hidden="true" className="text-electric">
-                —
-              </span>
-              <span>
-                <strong className="text-navy">{servicio.nombre}:</strong>{" "}
+            <li key={servicio.slug} className="flex gap-4 p-5 sm:p-6">
+              <span
+                aria-hidden="true"
+                className="mt-2.5 h-px w-5 shrink-0 bg-electric"
+              />
+              <span className="leading-relaxed text-carbon/85">
+                <strong className="font-display text-lg text-navy">
+                  {servicio.nombre}
+                </strong>
+                <br />
                 {servicio.descripcionCorta}
               </span>
             </li>
           ))}
         </ul>
 
-        <h2 className="mt-12 font-display text-2xl text-navy">Cómo hablamos</h2>
-        <div className="mt-4 space-y-5 text-lg leading-relaxed">
+        <h2 className="mt-16 font-display text-2xl tracking-[-0.01em] text-navy sm:text-3xl">
+          Cómo hablamos
+        </h2>
+        <div className="mt-6 space-y-6 text-lg leading-relaxed text-carbon/90">
           <p>
             Sin jerga notarial en la conversación de venta. La letra menuda va
             donde corresponde —en el contrato y en los documentos legales— y ahí

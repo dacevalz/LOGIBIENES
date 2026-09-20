@@ -4,10 +4,12 @@ import type {
   TextareaHTMLAttributes,
 } from "react";
 
+/** `min-h-12`: con solo padding, un campo vacío quedaba bajo los 44 px. */
 const FIELD =
-  "w-full rounded-lg border border-carbon/25 bg-white px-4 py-3 text-base text-carbon " +
-  "placeholder:text-carbon/50 focus-visible:outline-2 focus-visible:outline-offset-2 " +
-  "focus-visible:outline-electric";
+  "w-full min-h-12 rounded-lg border border-navy/20 bg-white px-4 py-3 text-base text-carbon " +
+  "placeholder:text-carbon/50 transition-[border-color,box-shadow] duration-200 " +
+  "hover:border-navy/40 focus:border-electric focus:shadow-[0_0_0_3px_rgb(45_91_255/0.12)] " +
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-electric";
 
 /** Todo campo lleva `id` obligatorio: es lo que ata el `<label for>` (FR-009). */
 type WithId = { id: string };

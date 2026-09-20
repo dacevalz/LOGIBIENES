@@ -11,6 +11,11 @@ import { ContactCta } from "@/components/contact-cta";
  *
  * Usa siempre `contact-cta.tsx`, que resuelve WhatsApp real o su respaldo
  * según AS-01 — nunca un texto que dé por hecho que ese canal existe.
+ *
+ * El halo eléctrico y la retícula son decorativos y van bajo `aria-hidden`. El
+ * texto se queda en su propia columna (`max-w-2xl`), así que aunque el halo lo
+ * alcance en una pantalla ancha sigue siendo blanco sobre navy: muy por encima
+ * de 4.5:1.
  */
 export function CtaBand({
   titulo,
@@ -20,11 +25,24 @@ export function CtaBand({
   children: ReactNode;
 }) {
   return (
-    <section className="mt-16 rounded-xl bg-navy p-8 text-white">
-      <h2 className="font-display text-2xl">{titulo}</h2>
-      <p className="mt-3 text-white/85">{children}</p>
-      <div className="mt-6">
-        <ContactCta />
+    <section className="relative isolate mt-20 overflow-hidden rounded-band bg-navy px-7 py-12 text-white sm:px-12 sm:py-14">
+      <div
+        aria-hidden="true"
+        className="grid-texture absolute inset-0 -z-10 opacity-70"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute -right-20 -top-28 -z-10 size-72 rounded-full bg-electric/25 blur-3xl"
+      />
+
+      <div className="max-w-2xl">
+        <h2 className="font-display text-2xl leading-tight tracking-[-0.01em] sm:text-3xl">
+          {titulo}
+        </h2>
+        <p className="mt-4 text-lg leading-relaxed text-white/85">{children}</p>
+        <div className="mt-8">
+          <ContactCta />
+        </div>
       </div>
     </section>
   );

@@ -1,5 +1,4 @@
 import { Hero } from "@/components/sections/hero";
-import { Reveal } from "@/components/sections/reveal";
 import { ServiceGrid } from "@/components/sections/service-grid";
 import { buildBreadcrumbJsonLd, buildMetadata, jsonLdScript } from "@/lib/seo";
 
@@ -24,10 +23,11 @@ export default function Home() {
 
       <Hero />
 
-      {/* Por debajo del pliegue: aquí el reveal no produce parpadeo al hidratar. */}
-      <Reveal>
-        <ServiceGrid />
-      </Reveal>
+      {/* El reveal ya no se aplica aquí en bloque: `ServiceGrid` escalona sus
+          propios hijos. Envolver los 700 px de la sección en un solo `<Reveal>`
+          se percibía como un salto, no como una entrada. Sigue estando por
+          debajo del pliegue, así que no hay parpadeo al hidratar. */}
+      <ServiceGrid />
     </main>
   );
 }

@@ -17,21 +17,38 @@ import { motion, useReducedMotion } from "framer-motion";
  *
  * Úsalo únicamente por debajo del pliegue: envolver algo visible al cargar
  * produciría un parpadeo al hidratar.
+ *
+ * `delay` sirve para escalonar una lista (60–80 ms entre ítems basta; más allá
+ * de ~300 ms acumulados la página se siente lenta, no elegante). `className`
+ * existe porque el wrapper se interpone en el layout: una tarjeta con
+ * `h-full` necesita que su envoltorio también lo tenga.
  */
-export function Reveal({ children }: { children: ReactNode }) {
+export function Reveal({
+  children,
+  delay = 0,
+  className,
+}: {
+  children: ReactNode;
+  /** Retraso en milisegundos, para escalonar hermanos. */
+  delay?: number;
+  className?: string;
+}) {
   const [montado, setMontado] = useState(false);
   const movimientoReducido = useReducedMotion();
 
   useEffect(() => setMontado(true), []);
 
-  if (!montado || movimientoReducido) return <>{children}</>;
+  if (!montado || movimientoReducido) {
+    return className ? <div className={className}>{children}</div> : <>{children}</>;
+  }
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
+      className={className}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
+      transition={{ duration: 0.45, delay: delay / 1000, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
     </motion.div>

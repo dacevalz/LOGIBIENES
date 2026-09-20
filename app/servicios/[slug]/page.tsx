@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CtaBand } from "@/components/sections/cta-band";
+import { PageHeader } from "@/components/sections/page-header";
 import { SERVICIOS, getServicio } from "@/content/servicios";
 import {
   SITE_NAME,
@@ -73,7 +73,7 @@ export default async function PaginaServicio({ params }: Props) {
   const parrafos = servicio.descripcionLarga.split("\n\n");
 
   return (
-    <main id="contenido" className="mx-auto max-w-3xl px-4 py-16">
+    <main id="contenido" className="shell section-y max-w-3xl">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScript(breadcrumb) }}
@@ -83,27 +83,34 @@ export default async function PaginaServicio({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: jsonLdScript(serviceJsonLd) }}
       />
 
+      {/*
+        UN solo contenedor [data-content] en esta ruta: `us2-servicios.spec.ts`
+        lo lee con `innerText` en modo estricto para comprobar que los cinco
+        cuerpos son distintos. Un segundo contenedor rompería ese test.
+      */}
       <div data-content>
-        <p className="text-sm text-carbon/70">
-          <Link
-            href="/servicios"
-            className="underline underline-offset-4 hover:text-electric"
-          >
-            Servicios
-          </Link>
-        </p>
-
-        <h1 className="mt-3 font-display text-4xl text-navy sm:text-5xl">
-          {servicio.nombre}
-        </h1>
-        <p className="mt-4 text-xl text-carbon/80">
+        <PageHeader
+          titulo={servicio.nombre}
+          volver={{ href: "/servicios", label: "Todos los servicios" }}
+        >
           {servicio.descripcionCorta}
-        </p>
+        </PageHeader>
 
-        <div className="mt-8 space-y-5 text-lg leading-relaxed">
-          {parrafos.map((parrafo, i) => (
-            <p key={i}>{parrafo}</p>
-          ))}
+        {/* Primer párrafo destacado: da una entrada de lectura en vez de un
+            muro de texto de la misma densidad desde la primera línea. */}
+        <div className="mt-10 space-y-6 text-lg leading-relaxed text-carbon/90">
+          {parrafos.map((parrafo, i) =>
+            i === 0 ? (
+              <p
+                key={i}
+                className="border-l-2 border-electric/40 pl-5 text-xl leading-relaxed text-carbon"
+              >
+                {parrafo}
+              </p>
+            ) : (
+              <p key={i}>{parrafo}</p>
+            ),
+          )}
         </div>
 
         <CtaBand titulo={servicio.ctaTexto}>

@@ -1,5 +1,6 @@
 import { ContactCta } from "@/components/contact-cta";
 import { LeadForm } from "@/components/sections/lead-form";
+import { PageHeader } from "@/components/sections/page-header";
 import { nuevoFormTimestamp } from "@/lib/leads";
 import { buildBreadcrumbJsonLd, buildMetadata, jsonLdScript } from "@/lib/seo";
 
@@ -29,31 +30,34 @@ export default function Contacto() {
   const { formTimestamp, formTimestampSig } = nuevoFormTimestamp();
 
   return (
-    <main id="contenido" className="mx-auto max-w-2xl px-4 py-16">
+    <main id="contenido" className="shell section-y max-w-2xl">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScript(breadcrumb) }}
       />
 
       <div data-content className="mb-10">
-        <h1 className="font-display text-4xl text-navy">Hablemos</h1>
-        <p className="mt-4 text-lg text-carbon/80">
+        <PageHeader eyebrow="Contacto" titulo="Hablemos">
           Cuéntanos qué necesitas y te respondemos por donde prefieras. No hace
           falta que tengas los papeles listos ni las cuentas claras para
           escribirnos.
-        </p>
-        <div className="mt-6">
+        </PageHeader>
+        <div className="mt-8">
           <ContactCta variant="secondary" />
         </div>
       </div>
 
-      <LeadForm
-        tipo="contacto"
-        paginaOrigen="/contacto"
-        formTimestamp={formTimestamp}
-        formTimestampSig={formTimestampSig}
-        fallbackCta={<ContactCta />}
-      />
+      {/* El formulario sobre superficie blanca: separa visualmente "leer" de
+          "llenar", que es el único trabajo real de esta página. */}
+      <div className="rounded-card border border-navy/10 bg-white p-6 shadow-card sm:p-8">
+        <LeadForm
+          tipo="contacto"
+          paginaOrigen="/contacto"
+          formTimestamp={formTimestamp}
+          formTimestampSig={formTimestampSig}
+          fallbackCta={<ContactCta />}
+        />
+      </div>
     </main>
   );
 }

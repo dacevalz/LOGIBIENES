@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { FAQ } from "../../content/faq";
+import { ID_POR_PREGUNTA } from "../../content/faq-ids";
 import { verificarContenidoSinJs } from "./_contenido-sin-js";
 
 /**
@@ -47,7 +48,22 @@ test("ningún <details> viene abierto: el colapso es real, no simulado", async (
   // entrada de content/faq.ts es lo que prueba que el acordeón existe de
   // verdad. (Lo señaló el code-reviewer en el gate de la fase 5: mi
   // razonamiento original atribuía el mérito al chequeo de `open`.)
-  expect([...html.matchAll(/<details[\s>]/gi)].length).toBe(FAQ.length);
+  //
+  // Se ancla al `id` de cada pregunta en vez de contar los <details> del
+  // documento. Contar daba por hecho que el layout no tenía ninguno, y dejó de
+  // ser cierto cuando el header ganó su menú móvil — también <details> nativo,
+  // por la misma razón que este acordeón. Anclar al id es además más estricto:
+  // catorce <details> cualesquiera ya no satisfacen la guarda.
+  for (const { pregunta } of FAQ) {
+    const id = ID_POR_PREGUNTA.get(pregunta);
+    expect(id, `content/faq-ids.ts no asignó id a "${pregunta}"`).toBeDefined();
+
+    expect(
+      new RegExp(`<details[^>]*\\sid="${id}"[\\s>]`, "i").test(html),
+      `no hay un <details id="${id}"> para "${pregunta}": el acordeón no está ` +
+        `renderizando esa entrada como elemento colapsable propio`,
+    ).toBe(true);
+  }
 });
 
 test("el JSON-LD FAQPage viaja en el HTML y cubre todas las preguntas", async ({

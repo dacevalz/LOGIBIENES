@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ContactCta } from "@/components/contact-cta";
 import { LeadForm } from "@/components/sections/lead-form";
+import { PageHeader } from "@/components/sections/page-header";
 import { nuevoFormTimestamp } from "@/lib/leads";
 import { buildBreadcrumbJsonLd, buildMetadata, jsonLdScript } from "@/lib/seo";
 
@@ -28,26 +29,24 @@ export default function Propiedades() {
   const { formTimestamp, formTimestampSig } = nuevoFormTimestamp();
 
   return (
-    <main id="contenido" className="mx-auto max-w-2xl px-4 py-16">
+    <main id="contenido" className="shell section-y max-w-2xl">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScript(breadcrumb) }}
       />
 
       <div data-content className="mb-10">
-        <h1 className="font-display text-4xl text-navy sm:text-5xl">
-          Cuéntanos qué buscas
-        </h1>
         {/*
           Constitución III: se dice lo que hay, no se simula un catálogo vacío
           ni se promete inventario que no existe.
         */}
-        <p className="mt-4 text-lg text-carbon/80">
+        <PageHeader eyebrow="Propiedades" titulo="Cuéntanos qué buscas">
           Todavía no publicamos listados en el sitio. En vez de mostrarte una
           lista que no corresponde a lo que necesitas, preferimos que nos digas
           qué estás buscando y avisarte cuando tengamos algo que encaje.
-        </p>
-        <p className="mt-4 text-carbon/80">
+        </PageHeader>
+
+        <p className="mt-5 max-w-2xl leading-relaxed text-carbon/75">
           Toma menos de un minuto. Si prefieres contarlo en una conversación,{" "}
           <Link
             href="/contacto"
@@ -59,13 +58,15 @@ export default function Propiedades() {
         </p>
       </div>
 
-      <LeadForm
-        tipo="busqueda"
-        paginaOrigen="/propiedades"
-        formTimestamp={formTimestamp}
-        formTimestampSig={formTimestampSig}
-        fallbackCta={<ContactCta />}
-      />
+      <div className="rounded-card border border-navy/10 bg-white p-6 shadow-card sm:p-8">
+        <LeadForm
+          tipo="busqueda"
+          paginaOrigen="/propiedades"
+          formTimestamp={formTimestamp}
+          formTimestampSig={formTimestampSig}
+          fallbackCta={<ContactCta />}
+        />
+      </div>
     </main>
   );
 }

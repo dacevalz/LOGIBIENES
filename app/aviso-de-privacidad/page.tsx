@@ -28,14 +28,18 @@ const breadcrumb = buildBreadcrumbJsonLd([
  */
 export default function AvisoDePrivacidad() {
   return (
-    <main id="contenido" className="mx-auto max-w-3xl px-4 py-16">
+    <main id="contenido" className="shell section-y max-w-3xl">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScript(breadcrumb) }}
       />
 
-      <div data-content className="space-y-6">
-        <h1 className="font-display text-4xl text-navy">Aviso de privacidad</h1>
+      {/* `legal-doc` (globals.css) fija la medida de lectura y el aire extra
+          antes de cada <h2>: es lo que vuelve navegable un texto legal largo. */}
+      <div data-content className="legal-doc leading-relaxed text-carbon/90">
+        <h1 className="font-display text-[clamp(2.25rem,5vw,3.25rem)] leading-[1.06] tracking-[-0.015em] text-navy">
+          Aviso de privacidad
+        </h1>
         <p className="text-sm text-carbon/70">
           Versión vigente: <strong>{AVISO_PRIVACIDAD_VERSION}</strong>
         </p>
