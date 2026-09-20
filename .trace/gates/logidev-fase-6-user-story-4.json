@@ -1,0 +1,32 @@
+{
+  "timestamp": "2026-09-20T02:05:00-05:00",
+  "tier": "T2",
+  "stage": "logidev:fase-6-user-story-4",
+  "gates": {
+    "logicraft-trace:code-reviewer": "pass (vuelta 1, APPROVE con 1 MEDIUM de defensa en profundidad diferido a Phase 7)",
+    "tests": "pass — unit 35/35, smoke 14/14, e2e 16/16",
+    "build": "pass (/contacto y /propiedades ambas como f Dynamic)",
+    "prueba de mutación de la guarda AS-03": "pass — 3 mutaciones (comentar, borrar, renombrar) ponen la guarda en rojo; archivos restaurados y verificados idénticos con diff",
+    "lint": "pass (0 problemas)",
+    "npm audit": "pass (0 vulnerabilidades)"
+  },
+  "iterations": 1,
+  "signed_off_by": null,
+  "notes": "T2 no exige sign-off humano nombrado. AS-03 CERRADA: /propiedades declara force-dynamic, el build la lista como dinámica, y la guarda mecanizada ahora detecta las tres formas de romperla. Assumption pasa a validado. Q-02 CERRADA: con ambas páginas existentes, la guarda ya no tolera que falte un archivo de la lista, y un tercer test recorre app/ buscando llamadas a nuevoFormTimestamp para que una página futura no se quede fuera de la cobertura. HALLAZGO PROPIO de esta fase, no del revisor: la guarda de AS-03 creada en la fase 3 era falsa — detectaba el borrado del export pero no que se comentara, porque aplicaba el patrón al texto crudo. Se corrigió y se anotó el registro de la fase 3 en una entrada aparte de este mismo ledger. MEDIUM diferido a Phase 7 (Q-04): la guarda sigue siendo un proxy TEXTUAL sobre el código fuente; la única verificación contra la clasificación real de Next es leer el output de npm run build a ojo. Automatizarlo en T059 cerraría el hueco estructural. El revisor confirmó que el tercer test de us4-propiedades-no-js.spec.ts es especialmente valioso: prueba que el destino del 303 lo decide el tipo y no la página de origen, que es el riesgo real de compartir un solo componente de formulario entre dos tipos de lead.",
+  "files": {
+    "app/propiedades/page.tsx": "00c20872fd8bd87320ee72ca48db39f64a56ca32762963252bc0e00a973212a4",
+    "app/propiedades/gracias/page.tsx": "eb4735868d77d3a55b4761583e5d74bcfebbe2f3442b31608069e485f8e0989c",
+    "app/propiedades/error/page.tsx": "1ecf7349c2a07572777f117b5bd76fc40a53c918eda281eb89a9ded7e94a8626",
+    "tests/unit/paginas-formulario.test.ts": "5434adeb9acab6af6d9addd2965096c15bea41a16e43085b05c8cea9498c4cea",
+    "tests/e2e/us4-propiedades.spec.ts": "47a5c3252c8942e6cd81f739464e40a40c746252d12b99f87ce9b429a334d72e",
+    "tests/e2e/us4-propiedades-no-js.spec.ts": "2cfff0ba270454ea321c0cbeed7977fb4efbd797991ffb3a1c14eab1f551aaee",
+    "tests/smoke/propiedades.spec.ts": "14b59a3b3469f51f57a963639e7fd875264f059c02b7c849405bf960e3f237c2"
+  },
+  "decision_ids": [],
+  "assumption_ids": [
+    "AS-01",
+    "AS-02",
+    "AS-03"
+  ],
+  "prev_hash": "19f6b151a493f33e1d0ff9c95c64de7b5c2a25405bc4b7de113a7f8fcb15c131"
+}

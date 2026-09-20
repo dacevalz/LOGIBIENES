@@ -59,3 +59,15 @@
 - **Disparador:** al escribir el test unitario de los ids de la FAQ, el runner falló transformando JSX porque la lógica vivía dentro de un componente `.tsx` y el `tsconfig` usa `jsx: "preserve"`.
 - **Lección:** que un test no pueda importar algo suele ser una señal de diseño, no un problema de configuración del runner. Aquí la generación de ids era dato derivado del contenido, no UI, y estaba en el archivo equivocado.
 - **Guardrail:** antes de tocar la configuración del runner para poder importar algo, preguntar si eso que se quiere probar pertenece de verdad al archivo donde está. Si es lógica pura dentro de un componente, moverla a un módulo sin JSX y probarla ahí.
+
+## 2026-09-20 — 001-sitio-marketing-mvp / Phase 6 (User Story 4)
+
+- **Disparador:** la guarda que mecanizaba AS-03 buscaba `export const dynamic = "force-dynamic"` con una expresión regular sobre el texto crudo del archivo. Comentar la línea la seguía satisfaciendo. Detectaba el borrado, no el comentado — y comentar es la forma más común de desactivar algo "un momento". Estuvo tres fases pareciendo que cubría la precondición de la que depende toda la defensa anti-replay.
+- **Lección:** un guardrail que nunca se probó contra la mutación que pretende atrapar es una suposición con nombre de test. Peor: su existencia desactiva la vigilancia de todos, porque el equipo deja de mirar eso "porque ya hay un test".
+- **Guardrail:** todo test que exista para detectar una regresión concreta se valida rompiendo esa cosa a propósito y viendo el rojo, en el mismo commit que lo introduce — y contra **más de una** forma de romperla (comentar, borrar, renombrar, mover). Si el guardrail es un proxy textual de una propiedad real, anotar explícitamente cuál es la fuente de verdad y qué se le escapa.
+
+## 2026-09-20 — 001-sitio-marketing-mvp / Phase 6 (registro)
+
+- **Disparador:** al corregir la guarda hubo que decidir qué hacer con el ledger de la fase 3, que afirmaba una verificación empírica más fuerte de la ocurrida. El impulso inicial fue declararlo "irreconstruible"; el repo tiene historia de git, así que se recuperó la versión exacta de la guarda con `git show` y se demostró qué detectaba y qué no.
+- **Lección:** "no se puede reconstruir" es una afirmación que también hay que verificar. Y al corregir un registro conviene separar la afirmación de proceso (cómo se verificó) de la de riesgo (si el sistema estuvo mal), porque inflar la segunda repite el mismo pecado de imprecisión que se está corrigiendo — aquí la evidencia del build, independiente del regex, mostraba que nunca hubo riesgo real en producción.
+- **Guardrail:** antes de anotar un registro como irreconstruible, intentar reconstruirlo desde el historial de git. Y al escribir la corrección, declarar por separado qué se corrige, qué NO se corrige y por qué, con la evidencia de cada parte.

@@ -124,12 +124,12 @@ Next.js App Router de una sola aplicación (`app/`, `components/`, `content/`, `
 
 **Independent Test**: entrar a `/propiedades` sin inventario cargado y completar el formulario de búsqueda en menos de un minuto.
 
-- [ ] T043 [US4] Implementar `app/propiedades/page.tsx` (depende de T012, T020, T014; `force-dynamic`): genera `formTimestamp`/`formTimestampSig` server-side y los pasa a `lead-form.tsx` (T012, el **mismo componente** de US1) con `tipo="busqueda"`; metadata + `BreadcrumbList`
-- [ ] T044 [P] [US4] Implementar `app/propiedades/gracias/page.tsx` (`noindex`, `data-content`)
-- [ ] T045 [P] [US4] Implementar `app/propiedades/error/page.tsx` (`noindex`, `data-content`, usa `contact-cta.tsx`)
-- [ ] T046 [P] [US4] `tests/e2e/us4-propiedades.spec.ts` (JS habilitado) — envío del formulario de búsqueda confirma registro
-- [ ] T047 [P] [US4] `tests/e2e/us4-propiedades-no-js.spec.ts` (`javaScriptEnabled:false`) — envío nativo redirige a `/propiedades/gracias`
-- [ ] T048 [P] [US4] `tests/smoke/propiedades.spec.ts` (Playwright, `javaScriptEnabled:false`) — `[data-content]` presente y sin ocultamiento en línea
+- [x] T043 [US4] Implementar `app/propiedades/page.tsx` (depende de T012, T020, T014; `force-dynamic`): genera `formTimestamp`/`formTimestampSig` server-side y los pasa a `lead-form.tsx` (T012, el **mismo componente** de US1) con `tipo="busqueda"`; metadata + `BreadcrumbList`
+- [x] T044 [P] [US4] Implementar `app/propiedades/gracias/page.tsx` (`noindex`, `data-content`)
+- [x] T045 [P] [US4] Implementar `app/propiedades/error/page.tsx` (`noindex`, `data-content`, usa `contact-cta.tsx`)
+- [x] T046 [P] [US4] `tests/e2e/us4-propiedades.spec.ts` (JS habilitado) — envío del formulario de búsqueda confirma registro
+- [x] T047 [P] [US4] `tests/e2e/us4-propiedades-no-js.spec.ts` (`javaScriptEnabled:false`) — envío nativo redirige a `/propiedades/gracias`
+- [x] T048 [P] [US4] `tests/smoke/propiedades.spec.ts` (Playwright, `javaScriptEnabled:false`) — `[data-content]` presente y sin ocultamiento en línea
 
 **Checkpoint**: las 4 historias de usuario funcionan de forma independiente — feature completa.
 

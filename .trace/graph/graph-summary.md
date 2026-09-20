@@ -8,7 +8,7 @@
 
 - 🔶 **AS-01** (Assumption, `pendiente`): Los datos de contacto reales (WhatsApp, teléfono, correo) llegarán como placeholder claro y se reemplazarán antes de publicar a producción. `blocks: []` — no bloquea ningún Work todavía, pero debe resolverse antes del lanzamiento a producción. Mecanismo de cumplimiento: `tests/unit/no-placeholder-contact.test.ts` (ver `plan.md` §"Guardas antes de producción").
 - 🔶 **AS-02** (Assumption, `pendiente`): Se usará Resend para notificar leads por email; requiere cuenta y dominio remitente verificado por DNS antes de producción. `blocks: []` — no confirmado aún por el usuario.
-- 🔶 **AS-03** (Assumption, `pendiente`): **Toda la defensa anti-replay del formulario depende de que `app/contacto/page.tsx` (T027) y `app/propiedades/page.tsx` (T043) declaren `export const dynamic = "force-dynamic"`.** Sin eso el par `(formTimestamp, formTimestampSig)` se congela en build y la ventana de 2 h deja de acotar nada. Detectada por `security-reviewer` en el gate de la fase 2, cuando esas páginas aún no existían. `blocks: []` a propósito (bloquearlas sería un deadlock), pero **ni W-03 ni W-06 se pueden cerrar sin verificarlo ejecutando** — preferiblemente con una prueba que falle si el export no está, como `no-placeholder-contact.test.ts` mecaniza AS-01.
+- ✅ **AS-03** (Assumption, `validado`): la defensa anti-replay dependía de que `/contacto` y `/propiedades` declararan `force-dynamic`. Cerrada en la fase 6: ambas lo declaran, el build las lista como dinámicas, y `tests/unit/paginas-formulario.test.ts` detecta comentar, borrar o renombrar. **La guarda original de la fase 3 solo detectaba el borrado** — ver la anotación de la fase 3 en el ledger.
 - ✅ **D-01** (Decision, `aceptada`): Plan técnico (`plan.md`) aprobado por `logicraft-trace:architect` tras 5 vueltas de corrección. Sellado en `.trace/spec-chain/`.
 - ✅ **D-02** (Decision, `aceptada`): `tasks.md` (59 tareas) aprobado tras 4 vueltas de corrección. Congruencia cruzada final spec+plan+tasks confirmada. **Planificación cerrada — lista para `logidev`.**
 
@@ -33,6 +33,7 @@
 - ✅ **W-05** Phase 5: User Story 3 — cerrada 2026-09-20, gate `pass` en vuelta 3 (ver `.trace/gates/logidev-fase-5-user-story-3.json`)
   - ✅ **D-10** (Decision, `aceptada`): T040 describe el colapso como CSS de altura/overflow, pero `<details>` colapsa por la regla `display:none` del user-agent. El invariante FR-008 se cumple igual y lo verifica el smoke. Desviación de mecanismo, distinta de D-07.
   - ✅ **D-11** (Decision, `aceptada`): el `<summary>` envuelve su título en un `<h3>` para que la navegación por encabezados alcance cada pregunta; los ids se movieron a `content/faq-ids.ts` con desambiguación ante colisión y quedaron cubiertos por tests.
-- ⚪ **W-06** Phase 6: User Story 4 — Dejar sus criterios de búsqueda sin inventario aún cargado (P4) ← siguiente. **No se puede cerrar sin verificar `force-dynamic` en `/propiedades` (AS-03) con evidencia ejecutada.**
-- ⚪ **W-07** Phase 7: Polish & Cross-Cutting Concerns
+- ✅ **W-06** Phase 6: User Story 4 — cerrada 2026-09-20, gate `pass` en la vuelta 1 (ver `.trace/gates/logidev-fase-6-user-story-4.json`). **Las 4 historias de usuario están completas.** AS-03 validada con prueba de mutación de tres vectores; Q-02 resuelta.
+- ⚪ **W-07** Phase 7: Polish & Cross-Cutting Concerns ← siguiente
   - ⚪ **Q-03** (Question, `simple`, abierta): el bloque de CTA está repetido en tres páginas; extraerlo aquí, que es donde corresponde.
+  - ⚪ **Q-04** (Question, `simple`, abierta): la guarda de AS-03 es un proxy textual; automatizar la verificación contra la clasificación real de rutas del build en T059.
