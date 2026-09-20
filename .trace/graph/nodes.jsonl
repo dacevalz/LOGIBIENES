@@ -1,0 +1,4 @@
+{"event":"create","id":"A-01","type":"Area","title":"Logibienes — presencia digital (sitio web de marketing)","tier":"T2","repo":"C:\\Users\\Admin\\Documents\\APLICACIONES\\Logibienes\\web","timestamp":"2026-09-19T00:00:00-05:00"}
+{"event":"create","id":"G-01","type":"Goal","title":"Lanzar sitio web de marketing MVP de Logibienes (Next.js, accesible para humanos y agentes de IA, SEO/AEO local Medellín)","parent":"A-01","timestamp":"2026-09-19T00:05:00-05:00"}
+{"event":"create","id":"TH-01","type":"Theme","title":"Fase 1 — MVP (Home, Nosotros, Servicios, FAQ, Contacto, Legales)","parent":"G-01","timestamp":"2026-09-19T00:05:00-05:00"}
+{"event":"create","id":"AS-01","type":"Assumption","title":"Los datos de contacto reales (WhatsApp, teléfono, correo) llegarán como placeholder claro y se reemplazarán antes de publicar a producción","related_to":"TH-01","estado":"pendiente","blocks":[],"timestamp":"2026-09-19T00:05:00-05:00"}

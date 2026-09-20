@@ -1,0 +1,8 @@
+{
+  "feature": "001-sitio-marketing-mvp",
+  "spec": {
+    "file": "specs/001-sitio-marketing-mvp/spec.md",
+    "fingerprint": "sha256:c15f8a907b1fd1bc091507f7f3c87d49cd1a3bac0cc8505f8426dfc2a5f24411",
+    "sealed_at": "2026-09-20T03:19:33.206Z"
+  }
+}

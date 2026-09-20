@@ -1,0 +1,7 @@
+{
+  "tier": "T2",
+  "reason": "Sitio web de marketing/contenido para Logibienes S.A.S. (inmobiliaria). No mueve dinero ni toca alcance PCI (T0 descartado). No maneja autenticación de usuarios ni se integra con sistemas financieros externos; el único dato personal es nombre/email/teléfono capturado en un formulario de contacto para gestión comercial de leads, tratamiento básico y habitual (Habeas Data estándar, Ley 1581/2012) que no eleva el proyecto a T1. Es una aplicación de negocio estándar: landing pages, blog, formulario de contacto, sin base de datos propia en el MVP.",
+  "classified_at": "2026-09-19",
+  "classified_by": "trace-classify",
+  "review_trigger": "Reclasificar a T1 si se agrega: autenticación de usuarios, almacenamiento de datos sensibles/regulados (financieros, de salud, biométricos), integración con pasarelas de pago o sistemas financieros externos, o manejo masivo/automatizado de PII más allá del formulario de contacto básico."
+}

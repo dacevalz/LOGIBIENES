@@ -1,0 +1,38 @@
+{
+  "documentos": [
+    {
+      "archivo_original": "Logibienes/Logibienes/Brandig Logibienes.pdf",
+      "md": ".trace/ingestion/logibienes-branding/branding.md",
+      "fecha_ingesta": "2026-09-19",
+      "cliente_o_entidad": "Logibienes S.A.S.",
+      "numero_proceso": null,
+      "metodo": "Lectura directa del PDF (Read tool, no MinerU). Justificación: documento de 1 sola página, mayormente un moodboard visual (mockups de logo/merch/app), sin tablas ni estructura compleja que justifique el pipeline OCR/layout de MinerU (~2GB de modelos, instalación local pesada). El contenido textual relevante (tagline, tipografías, paleta hex) se transcribió con fidelidad completa en la misma lectura. Si en el futuro llega un documento de branding más extenso o con tablas/diagramas complejos, usar MinerU normalmente.",
+      "secciones": [
+        {
+          "titulo": "Mensaje de marca",
+          "resumen": "Tagline principal y promesa de marca: inmobiliaria simple, rápida y digital para comprar, vender, arrendar o invertir.",
+          "palabras_clave": ["tagline", "un solo lugar", "fácil rápido digital", "inmobiliaria simple y digital"],
+          "tipo_contenido": "otro"
+        },
+        {
+          "titulo": "Tipografía",
+          "resumen": "Define Impact como fuente de logo/display e Inter Light como fuente de apoyo/texto.",
+          "palabras_clave": ["Impact", "Inter Light", "tipografía de marca"],
+          "tipo_contenido": "otro"
+        },
+        {
+          "titulo": "Paleta de color",
+          "resumen": "Cuatro colores de marca con hex exactos: Azul Navy, Negro Carbón, Blanco Frío, Azul Eléctrico.",
+          "palabras_clave": ["#0E1F3C", "#121417", "#F4F6F8", "#2D5BFF", "paleta de marca"],
+          "tipo_contenido": "otro"
+        },
+        {
+          "titulo": "Aplicaciones mostradas en el moodboard",
+          "resumen": "Mockups de merchandising, app móvil, señalética física y patrón de marca; incluye una cifra de calificación de app store que es ilustrativa, no un dato real de la empresa.",
+          "palabras_clave": ["mockup", "app icon", "señalética", "patrón de marca", "cifra ilustrativa no real"],
+          "tipo_contenido": "otro"
+        }
+      ]
+    }
+  ]
+}

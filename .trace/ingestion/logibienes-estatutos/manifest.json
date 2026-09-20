@@ -1,0 +1,32 @@
+{
+  "documentos": [
+    {
+      "archivo_original": "Estatutos-Logibienes-SAS.md",
+      "md": "../../../../Estatutos-Logibienes-SAS.md",
+      "fecha_ingesta": "2026-09-19",
+      "cliente_o_entidad": "Logibienes S.A.S.",
+      "numero_proceso": null,
+      "metodo": "Documento nativo en Markdown, sin conversión (regla de 'Documentos que ya llegan en Markdown' de pdf-to-md).",
+      "secciones": [
+        {
+          "titulo": "ARTÍCULO 5. OBJETO SOCIAL",
+          "resumen": "Define las 8 líneas de negocio reales de Logibienes: compraventa de inmuebles, intermediación (venta/arriendo/permuta), administración y arrendamiento, urbanización y construcción, asesoría/consultoría/avalúos, contratación con el Estado, y actos conexos. Es la base directa del sitemap de /servicios.",
+          "palabras_clave": ["compraventa de inmuebles", "intermediación inmobiliaria", "administración y arrendamiento", "urbanización y construcción", "asesoría y avalúos"],
+          "tipo_contenido": "requisitos"
+        },
+        {
+          "titulo": "ARTÍCULO 4. DOMICILIO",
+          "resumen": "Campo sin diligenciar (ciudad en blanco) — dato pendiente que bloquea el NAP (Name-Address-Phone) para SEO local y el JSON-LD de Organization.",
+          "palabras_clave": ["domicilio", "ciudad", "dato pendiente"],
+          "tipo_contenido": "riesgos"
+        },
+        {
+          "titulo": "ARTÍCULO 3. LA SOCIEDAD",
+          "resumen": "Sociedad de nacionalidad colombiana, sujeta a la ley colombiana — confirma que el marco legal aplicable al sitio (Habeas Data, etc.) es el de Colombia.",
+          "palabras_clave": ["nacionalidad colombiana", "Ley 1258 de 2008"],
+          "tipo_contenido": "legal"
+        }
+      ]
+    }
+  ]
+}
